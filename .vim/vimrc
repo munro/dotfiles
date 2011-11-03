@@ -1,0 +1,174 @@
+"" Configuration
+syntax on
+filetype off
+set ai
+set backspace=indent,eol,start
+set bs=2
+set hidden
+set history=200
+set ls=2
+set mouse=a
+set nocompatible
+set nofoldenable
+set notitle
+set novb
+set number
+set pastetoggle=<F11>
+set ruler
+set showcmd
+set showmatch
+set t_vb=
+set timeout timeoutlen=3000 ttimeoutlen=100
+set visualbell t_vb=
+set wildmenu
+set wildmode=longest:full
+" Tabbing
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+set expandtab
+set cc=81
+" Makefile sanity
+autocmd BufEnter ?akefile* set noet ts=8 sw=8
+autocmd BufEnter */debian/rules set noet ts=8 sw=8
+" Ignore extensions
+set wildignore+=*.o,*.obj,.git,*.min.js,*.png,*.class,*.jpg,*.jar,*.pack,*.idx,*.gif,*.apk,*.dmg,*.exe,*.dll,*.bak,*.orig,*.swp,*.swo,*.gif,*.pyc,*.swf,*.pdf,*.psd,*.zip,*.flv,*.ttf,*.gz,*.gpg,*.fla,node_modules,*.a,*.so,*.hi,dist/*
+" Set title
+set title titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+" Set temp swp directory
+set dir=$HOME/.vim/tmp
+" Search settings
+"set shiftround
+"set autoindent
+set incsearch
+set hlsearch
+set ignorecase
+set cursorline
+
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+cmap w!! w !sudo tee % >/dev/null
+
+"" Colors
+set t_Co=256
+colorscheme candycode2
+set bg=light
+set bg=dark
+
+"" gvim
+set guifont=Ubuntu\ Mono\ 11
+set guioptions-=T
+set guioptions-=m
+set guioptions-=l
+set guioptions-=r
+set guioptions-=b
+set guioptions-=L
+
+"" Key bindings
+" Let upper case write/quit commands work
+com! Q q
+com! W w
+com! Wq wq
+com! WQ wq
+com! Bd bd
+com! BD bd
+" Jump to after end of line of next ending brace
+"nnoremap <C-e> :/}<CR>A
+"inoremap <C-e> <ESC>:/}<CR>A
+"" Copy
+"nnoremap <C-c> "+y
+"vnoremap <C-c> "+y
+"" inoremap <C-c> <ESC>V<CR>"+y<ESC>i
+"" Paste
+"nnoremap <C-x> "+p
+"vnoremap <C-x> "+p
+"inoremap <C-x> <ESC>"+pi
+" Maps
+nnoremap <C-p> :CommandT<CR>
+nnoremap <F2> :CommandTBuffer<CR>
+"nnoremap <F4> :set nonumber!<CR>
+"nnoremap <gt> :tabprevious<CR>
+"nnoremap <gT> :tabNext<CR>
+"nnoremap <TAB> :tabnext<CR>
+"nnoremap <S-TAB> :tabprevious<CR>
+
+"" Underline cursor in insert mode
+"if &term =~ "xterm"
+"    let &t_SI = "\<Esc>]777;Cs;3\x7"
+"    let &t_EI = "\<Esc>]777;Cs;1\x7"
+"endif
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" Syntax detection
+au BufRead,BufNewFile *.cpp set syntax=cpp11
+au BufRead,BufNewFile *.h set syntax=cpp11
+au BufRead,BufNewFile *.mxml set filetype=mxml
+au Bufread,BufNewFile *.as set filetype=actionscript
+au Bufread,BufNewFile *.co set filetype=coffee
+au Bufread,BufNewFile *.cs set filetype=coffee
+au Bufread,BufNewFile *.go set filetype=go
+au Bufread,BufNewFile *.less set filetype=less
+au Bufread,BufNewFile *.php.tpl set filetype=php
+au Bufread,BufNewFile *.class set filetype=php
+au Bufread,BufNewFile *.lang set filetype=lang
+au Bufread,BufNewFile *.m set filetype=objc
+
+"" Bundle Configuration
+" Snipmate
+let g:snips_author = 'Ryan Munro'
+" Gist
+let g:github_user = 'munro'
+let g:github_token = $GITHUB_TOKEN
+
+"" Enable vundle
+set rtp+=~/.vim/vundle/ 
+call vundle#begin()
+
+"" My bundles
+" Auto popup omni completion
+"Bundle 'AutoComplPop'
+" Syntax
+" Bundle 'vim-stylus'
+" Code snippets
+"Bundle 'snipMate'
+" Quickly search the working directory
+Bundle "Command-T"
+" Powerful git integration
+Bundle 'fugitive.vim'
+" Post gists to github!
+" Bundle 'Gist.vim'
+"" Javascript Bundles
+" Autodectect nodejs files
+" Bundle 'node.js'
+" Highlight bad code
+let g:syntastic_javascript_jslint_conf = ""
+Bundle 'Syntastic'
+let g:syntastic_haskell_ghc_mod_args = "-g -idrc:src/"
+Plugin 'restore_view.vim'
+Plugin 'ucompleteme'
+" Bundle 'html5.vim'
+" Bundle 'HTML5-Syntax-File'
+" Haskell Stuff
+Plugin 'Hoogle'
+Plugin 'neco-ghc'
+Plugin 'haskell.vim'
+Plugin 'Cabal.vim'
+
+"" Include local vim settings
+if filereadable($HOME . "/.vimrc.local")
+    source $HOME/.vimrc.local
+endif
+
+"" Enable plugins
+call vundle#end()
+filetype plugin indent on
+
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
+"" Enable syntax highlighting, must be done called after all the syntax files
+"" have been included.
+syntax on

@@ -1,0 +1,249 @@
+Xcursor.theme: Vanilla-DMZ-AA
+Emacs.font: Ubuntu Mono-11
+
+!Xft.dpi:       96
+!Xft.antialias: true
+!Xft.hinting:   true
+!Xft.hintstyle: hintfull
+!Xft.rgba:      rgb
+!Xft.lcdfilter: lcddefault
+
+!Xft.dpi:        96
+!Xft.lcdfilter:  lcddefault
+!!!Xft.antialias:  true
+!Xft.rgba:       rgb
+!Xft.hinting:    true
+!Xft.hintstyle:  hintfull
+!!!Xft.hintstyle:  hintslight
+
+URxvt*perl-lib:        /usr/lib/urxvt/perl/
+URxvt*perl-ext-common: default,matcher,osc-cursor-shape
+URxvt*urlLauncher:     /usr/bin/google-chrome
+URxvt*matcher.button:  1
+URxvt*underlineURLs:   true
+
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End:  \033[4~
+
+! XTerm class
+XTerm*faceName: Ubuntu Mono
+XTerm*faceSize: 11
+XTerm*termName: xterm-256color
+XTerm*boldMode: false
+
+! XTerm scheme - base
+XTerm*background: #332f2c
+XTerm*foreground: #e5e5e5
+XTerm*color0: #4d4843
+XTerm*color8: #777069
+XTerm*color1: #e10e36
+XTerm*color9: #fb365b
+XTerm*color2: #c7cd22
+XTerm*color10: #dfe544
+XTerm*color3: #f4a919
+XTerm*color11: #f6ba47
+XTerm*color4: #14abbd
+XTerm*color12: #32d4e7
+XTerm*color5: #3079c4
+XTerm*color13: #4294e7
+XTerm*color6: #819eb7
+XTerm*color14: #bbd0e1
+XTerm*color7: whitesmoke
+XTerm*color15: ghostwhite
+
+! Urxvt class
+URxvt.font: xft:Ubuntu Mono-11
+! URxvt*fading: 50
+URxvt*scrollBar: true
+URxvt*scrollstyle: plain
+URxvt*scrollBar_floating: true
+URxvt*scrollBar_right: true
+URxvt*scrollColor: #202020
+URxvt*termName: xterm-256color
+URxvt*saveLines: 8192
+URxvt*internalBorder: 20
+URxvt*urgentOnBell: true
+
+! Urxvt scheme - base
+URxvt*background: grey10
+URxvt*foreground: ghostwhite
+URxvt*color0: #4d4843
+URxvt*color8: #777069
+URxvt*color1: #e10e36
+URxvt*color9: #fb365b
+URxvt*color2: #c7cd22
+URxvt*color10: #dfe544
+URxvt*color3: #f4a919
+URxvt*color11: #f6ba47
+URxvt*color4: #14abbd
+URxvt*color12: #32d4e7
+URxvt*color5: #3079c4
+URxvt*color13: #4294e7
+URxvt*color6: #819eb7
+URxvt*color14: #bbd0e1
+URxvt*color7: whitesmoke
+URxvt*color15: ghostwhite
+
+! Urxvt Scheme - coding
+coding*font: xft:Ubuntu Mono-11
+coding*background: grey10
+coding*foreground: #DED6CA
+coding*color0: #4d4843
+coding*color8: #5C5245
+coding*color1: #76AEED
+coding*color9: #75B6FF
+coding*color2: #FFC469
+coding*color10: #FFD28D
+coding*color3: #E2E7F3
+coding*color11: #EBEFF9
+coding*color4: #CEA2EF
+coding*color12: #D6B6EF
+coding*color5: #B0D6FF
+coding*color13: #D0F6FF
+coding*color6: #FFD28D
+coding*color14: #FFDDAA
+coding*color7: #D1C8BC
+coding*color15: #DED6CA
+
+! Urxvt Scheme - tiny
+tiny*font: xft:Ubuntu Mono-11
+tiny*background: grey10
+tiny*foreground: #DED6CA
+tiny*color0: #4d4843
+tiny*color8: #5C5245
+tiny*color1: #76AEED
+tiny*color9: #75B6FF
+tiny*color2: #FFC469
+tiny*color10: #FFD28D
+tiny*color3: #E2E7F3
+tiny*color11: #EBEFF9
+tiny*color4: #CEA2EF
+tiny*color12: #D6B6EF
+tiny*color5: #B0D6FF
+tiny*color13: #D0F6FF
+tiny*color6: #FFD28D
+tiny*color14: #FFDDAA
+tiny*color7: #D1C8BC
+tiny*color15: #DED6CA
+
+
+!
+! invisibone by baskerville
+!
+! vim: set ft=xdefaults:
+foobar*background: #232323
+foobar*foreground: #A0A0A0
+
+foobar*colorBD:    #CFCFCF
+foobar*colorUL:    #A0A0A0
+foobar*colorIT:    #686868
+
+!BLK
+foobar*color0:     #303030
+foobar*color8:     #686868
+
+!RED
+foobar*color9:     #FFA7DA
+foobar*color1:     #D370A3
+
+!GRN
+foobar*color10:    #A3D572
+foobar*color2:     #6D9E3F
+
+!BLU
+foobar*color12:    #98CBFE
+foobar*color4:     #6095C5
+
+!YEL
+foobar*color11:    #EFBD8B
+foobar*color3:     #B58858
+
+!CYN
+foobar*color14:    #75DAA9
+foobar*color6:     #3BA275
+
+!MAG
+foobar*color13:    #E5B0FF
+foobar*color5:     #AC7BDE
+
+!WHT
+foobar*color7:     #CFCFCF
+foobar*color15:    #FFFFFF
+
+!!!! http://dotshare.it/dots/240/
+bread*background:#080808
+!black
+bread*color0:#282828
+bread*color8:#363636
+!red
+bread*color1:#F35850
+bread*color9:#FF756E
+!green
+bread*color2:#389E2F
+bread*color10:#50B347
+!yellow
+bread*color3:#E3D172
+bread*color11:#F0E9AB
+!blue
+bread*color4:#3A82A7
+bread*color12:#4B95AD
+!magenta
+bread*color5:#EDC4C0
+bread*color13:#E6DAD4
+!cyan
+bread*color6:#EA9A41
+bread*color14:#D28142
+!white
+bread*color7:#FEFEFC
+bread*color15:#FCEDE3
+
+bread*cursorColor:#3A82A7
+
+!!! http://dotshare.it/dots/286/
+!---------
+! Colores
+!---------
+dina*background: #111111
+dina*foreground: #babdb6
+
+!---------------------
+! Negro + GrisObscuro
+!---------------------
+dina*color0:  #2D2D2D
+dina*color8:  #555753
+!--------------------
+! RojoObscuro + Rojo
+!--------------------
+dina*color1:  #C84065
+dina*color9:  #F26C91
+!----------------------
+! VerdeObscuro + Verde
+!----------------------
+dina*color2:  #70E252
+dina*color10: #95FC7B
+!----------------------------
+! AmarilloObscuro + Amarillo
+!----------------------------
+dina*color3:  #C8C039
+dina*color11: #D1CB79
+!--------------------
+! AzulObscuro + Azul
+!--------------------
+dina*color4:  #74D9EE
+dina*color12: #A0EAF9
+!---------------------------
+! MoradoObscuro + Morado
+!---------------------------
+dina*color5:  #9F61BA
+dina*color13: #C89BDC
+!-------------------
+!CyanObscuro + Cyan
+!-------------------
+dina*color6:  #7A9ECD
+dina*color14: #AAC1DE
+!---------------
+! Gris + Blanco
+!---------------
+dina*color7:  #D5DFE3
+dina*color15: #E4F8FF
+

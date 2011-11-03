@@ -1,0 +1,17 @@
+Config 
+    { font = "xft:Ubuntu Mono-11"
+    , bgColor = "#111111"
+    , fgColor = "#888877"
+    , position = Top
+    , lowerOnStart = True
+    , commands = 
+        [ Run Cpu ["-t","cpu: <total>%","-L","3","-H","50","--normal","green","--high","red"] 10
+        , Run Memory ["-t","mem: <usedratio>%"] 10
+        , Run Com "uname" ["-s","-r"] "" 36000
+        , Run StdinReader
+        , Run Date "%a %b %_d %l:%M %p" "date" 10 
+        ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = "%StdinReader% }{ %cpu% | %memory% | %uname% | %date%" 
+    }
