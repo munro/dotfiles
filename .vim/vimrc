@@ -70,14 +70,14 @@ com! BD bd
 " Jump to after end of line of next ending brace
 "nnoremap <C-e> :/}<CR>A
 "inoremap <C-e> <ESC>:/}<CR>A
-" Copy
-nnoremap <C-c> "+y
-vnoremap <C-c> "+y
-" inoremap <C-c> <ESC>V<CR>"+y<ESC>i
-" Paste
-nnoremap <C-x> "+p
-vnoremap <C-x> "+p
-inoremap <C-x> <ESC>"+pi
+"" Copy
+"nnoremap <C-c> "+y
+"vnoremap <C-c> "+y
+"" inoremap <C-c> <ESC>V<CR>"+y<ESC>i
+"" Paste
+"nnoremap <C-x> "+p
+"vnoremap <C-x> "+p
+"inoremap <C-x> <ESC>"+pi
 " Maps
 nnoremap <F1> :CommandT<CR>
 nnoremap <F2> :CommandTBuffer<CR>
@@ -105,7 +105,6 @@ au Bufread,BufNewFile *.less set filetype=less
 au Bufread,BufNewFile *.php.tpl set filetype=php
 au Bufread,BufNewFile *.lang set filetype=lang
 au Bufread,BufNewFile *.m set filetype=objc
-syntax on
 
 "" Bundle Configuration
 " Snipmate
@@ -119,12 +118,16 @@ set rtp+=~/.vim/vundle/
 call vundle#rc()
 
 "" My bundles
+" Auto popup omni completion
+Bundle 'AutoComplPop'
+" Syntax
+Bundle 'vim-stylus'
 " Code snippets
 "Bundle 'snipMate'
 " Quickly search the working directory
 Bundle "Command-T"
 " Powerful git integration
-"Bundle 'fugitive.vim'
+Bundle 'fugitive.vim'
 " Post gists to github!
 Bundle 'Gist.vim'
 "" Javascript Bundles
@@ -136,3 +139,14 @@ Bundle 'Syntastic'
 
 "" Enable plugins
 filetype plugin indent on
+
+"" Include local vim settings
+if filereadable($HOME . "/.vimrc.local")
+    source $HOME/.vimrc.local
+endif
+
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
+"" Enable syntax highlighting, must be done called after all the syntax files
+"" have been included.
+syntax on

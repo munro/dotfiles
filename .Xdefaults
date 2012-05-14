@@ -1,16 +1,15 @@
 Xcursor.theme: Vanilla-DMZ-AA
 Emacs.font: Ubuntu Mono-11
 
-
 !Xft.hinting:   true
 !Xft.hintstyle: hintfull
 
-Xft.dpi:	96
-Xft.antialias:	true
-Xft.hinting:	true
-Xft.hintstyle:	hintfull
-Xft.rgba:	rgb
-Xft.lcdfilter:	lcddefault
+Xft.dpi:       96
+Xft.antialias: true
+Xft.hinting:   true
+Xft.hintstyle: hintfull
+Xft.rgba:      rgb
+Xft.lcdfilter: lcddefault
 
 !Xft.dpi:        96
 !Xft.lcdfilter:  lcddefault
@@ -20,15 +19,14 @@ Xft.lcdfilter:	lcddefault
 !Xft.hintstyle:  hintfull
 !!!Xft.hintstyle:  hintslight
 
-URxvt*perl-lib: /usr/lib/urxvt/perl/
-URxvt*perl-ext-common:  default,matcher,osc-cursor-shape
-URxvt*urlLauncher:      /usr/bin/google-chrome
-URxvt*matcher.button:   1
-URxvt*underlineURLs: true
-
+URxvt*perl-lib:        /usr/lib/urxvt/perl/
+URxvt*perl-ext-common: default,matcher,osc-cursor-shape
+URxvt*urlLauncher:     /usr/bin/google-chrome
+URxvt*matcher.button:  1
+URxvt*underlineURLs:   true
 
 URxvt*keysym.Home: \033[1~
-URxvt*keysym.End: \033[4~
+URxvt*keysym.End:  \033[4~
 
 ! XTerm class
 XTerm*faceName: Ubuntu Mono

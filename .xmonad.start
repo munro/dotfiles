@@ -3,27 +3,36 @@
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
-xcompgr
 xmodmap $HOME/.Xmodmap
 xrdb -load $HOME/.Xdefaults
 
-# Set up icon tray
+## Set up icon tray
 trayer --edge top --align center --SetDockType true --SetPartialStrut true \
-       --height 20 --widthtype request --transparent true --alpha 255 \
-       --tint 0x000000 &
+       --height 20 --widthtype request --alpha 0 --transparent true \
+       --tint 0x555555 &
 
-
-if [ -x /usr/bin/nm-applet ] ; then
+## Start system tray application
+if [ -f "`which nm-applet`" ] ; then
    nm-applet --sm-disable &
 fi
-
-if [ -x /usr/bin/gnome-power-manager ] ; then
-   #sleep 3 # not sure why this snippet wanted me to sleep
-   gnome-power-manager &
-fi
  
+if [ -f "`which gnome-sound-applet`" ]; then
+    gnome-sound-applet &
+fi
+
+if [ -f "`which gtk-redshift`" ]; then
+    gtk-redshift -l 45.41:-122.50 & # Portland, OR
+fi
+
 if [ -f $HOME/.fehbg ] ; then
     . $HOME/.fehbg
 fi
+
+## Start keyring server
+eval $(gnome-keyring-daemon --start)
+export GNOME_KEYRING_SOCKET
+export GNOME_KEYRING_PID
+
+xcompgr &
 
 exec xmonad
