@@ -41,8 +41,16 @@ set dir=$HOME/.vim/tmp
 " Search settings
 "set shiftround
 "set autoindent
-"set incsearch
-"set ignorecase
+set incsearch
+set hlsearch
+set ignorecase
+set cursorline
+
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+cmap w!! w !sudo tee % >/dev/null
 
 "" Colors
 set t_Co=256
@@ -119,7 +127,7 @@ call vundle#rc()
 
 "" My bundles
 " Auto popup omni completion
-Bundle 'AutoComplPop'
+"Bundle 'AutoComplPop'
 " Syntax
 Bundle 'vim-stylus'
 " Code snippets
@@ -136,16 +144,18 @@ Bundle 'node.js'
 " Highlight bad code
 let g:syntastic_javascript_jslint_conf = ""
 Bundle 'Syntastic'
-
-"" Enable plugins
-filetype plugin indent on
+Bundle 'html5.vim'
+Bundle 'HTML5-Syntax-File'
 
 "" Include local vim settings
 if filereadable($HOME . "/.vimrc.local")
     source $HOME/.vimrc.local
 endif
 
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+"" Enable plugins
+filetype plugin indent on
+
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
 "" Enable syntax highlighting, must be done called after all the syntax files
 "" have been included.

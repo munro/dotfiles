@@ -9,7 +9,7 @@ xrdb -load $HOME/.Xdefaults
 ## Set up icon tray
 trayer --edge top --align center --SetDockType true --SetPartialStrut true \
        --height 20 --widthtype request --alpha 0 --transparent true \
-       --tint 0x555555 &
+       --tint 0x555555 --monitor primary &
 
 ## Start system tray application
 if [ -f "`which nm-applet`" ] ; then

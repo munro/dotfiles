@@ -12,3 +12,5 @@
 	k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%cN%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 [merge]
 	ff = false
+[push]
+	default = tracking
