@@ -1,11 +1,5 @@
 [color]
 	ui = true
-[giggle]
-	main-window-maximized = true
-	main-window-geometry = 700x550+49+198
-	main-window-view = HistoryView
-	history-view-vpane-position = 515
-	file-view-vpane-position = 526
 [branch]
 	autosetuprebase = always
 [alias]
