@@ -1,0 +1,16 @@
+{
+	"font_face": "Ubuntu Mono",
+	"font_size": 12,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"indent_to_bracket": true,
+	"rulers":
+	[
+		80
+	],
+	"spell_check": true,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true
+}
