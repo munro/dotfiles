@@ -9,7 +9,7 @@ Config
         , Run Memory ["-t","mem: <usedratio>%"] 10
         , Run Com "uname" ["-s","-r"] "" 36000
         , Run StdinReader
-        , Run Date "%a %b %_d %H:%M" "date" 10 
+        , Run Date "%a %b %_d %l:%M %p" "date" 10 
         ]
     , sepChar = "%"
     , alignSep = "}{"
