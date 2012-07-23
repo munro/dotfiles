@@ -25,7 +25,7 @@ main = do
     hXmobar <- spawnPipe "/usr/bin/xmobar"
     xmonad =<< xmobar ((withUrgencyHook NoUrgencyHook) defaultConfig
         { modMask               = mod4Mask 
-        , terminal              = "urxvt -name foobar"
+        , terminal              = "gnome-terminal"
         , workspaces            = map show [1..6]
         , normalBorderColor     = colorNormalBorder
         , focusedBorderColor    = colorFocusedBorder

@@ -1,15 +1,12 @@
 Xcursor.theme: Vanilla-DMZ-AA
 Emacs.font: Ubuntu Mono-11
 
+!Xft.dpi:       96
+!Xft.antialias: true
 !Xft.hinting:   true
 !Xft.hintstyle: hintfull
-
-Xft.dpi:       96
-Xft.antialias: true
-Xft.hinting:   true
-Xft.hintstyle: hintfull
-Xft.rgba:      rgb
-Xft.lcdfilter: lcddefault
+!Xft.rgba:      rgb
+!Xft.lcdfilter: lcddefault
 
 !Xft.dpi:        96
 !Xft.lcdfilter:  lcddefault

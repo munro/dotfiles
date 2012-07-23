@@ -87,7 +87,7 @@ com! BD bd
 "vnoremap <C-x> "+p
 "inoremap <C-x> <ESC>"+pi
 " Maps
-nnoremap <F1> :CommandT<CR>
+nnoremap <C-p> :CommandT<CR>
 nnoremap <F2> :CommandTBuffer<CR>
 "nnoremap <F4> :set nonumber!<CR>
 "nnoremap <gt> :tabprevious<CR>
@@ -96,10 +96,10 @@ nnoremap <F2> :CommandTBuffer<CR>
 "nnoremap <S-TAB> :tabprevious<CR>
 
 "" Underline cursor in insert mode
-if &term =~ "xterm"
-    let &t_SI = "\<Esc>]777;Cs;3\x7"
-    let &t_EI = "\<Esc>]777;Cs;1\x7"
-endif
+"if &term =~ "xterm"
+"    let &t_SI = "\<Esc>]777;Cs;3\x7"
+"    let &t_EI = "\<Esc>]777;Cs;1\x7"
+"endif
 
 " Syntax detection
 au BufRead,BufNewFile *.cpp set syntax=cpp11
