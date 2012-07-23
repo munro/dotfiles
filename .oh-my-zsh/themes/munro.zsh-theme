@@ -30,13 +30,7 @@ case "`hostname`" in
 esac
 
 function scm_prompt_info() {
-    HG=$(hg_prompt_info)
-    if [ -n "$HG" ]
-    then
-        echo $HG
-    else
-        echo "$(git_prompt_info)"
-    fi
+    echo "$(git_prompt_info)"
 }
 
 if [ "$HOME" = "/root" ]
