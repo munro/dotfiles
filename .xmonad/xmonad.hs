@@ -36,8 +36,8 @@ main = do
         } `additionalKeys` wmKeys)
 
 -- Colors
-colorNormalBorder   = "#111111"
-colorFocusedBorder  = "#FFC469"
+colorNormalBorder   = "#18191B"
+colorFocusedBorder  = "#5C3566"
 
 -- Layout
 wmLayout = layoutHintsToCenter (wmLayoutTall ||| wmLayoutWide ||| Full ||| wmLayoutTiny ||| wmLayoutResize) 
