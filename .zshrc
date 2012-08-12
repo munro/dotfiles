@@ -38,7 +38,7 @@ export HGUSER="Munro"
 export EMAIL="munro.github@gmail.com"
 
 # Keyring client
-export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+#export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
 
 # Things not quite ready for the year 3000:
 # * Node.js
