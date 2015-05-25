@@ -24,27 +24,29 @@ DISABLE_AUTO_UPDATE="true"
 
 
 # Setup variables
-export PATH="$HOME/local/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/local/bin:$HOME/.cabal/bin:/usr/local/bin:$PATH"
 export EDITOR="vim"
 
 # Git variables
-export GIT_AUTHOR_NAME="Munro"
-export GIT_AUTHOR_EMAIL="munro.github@gmail.com"
-export GIT_COMMITTER_NAME="Munro"
-export GIT_COMMITTER_EMAIL="munro.github@gmail.com"
+#export GIT_AUTHOR_NAME="Munro"
+#export GIT_AUTHOR_EMAIL="munro.github@gmail.com"
+#export GIT_COMMITTER_NAME="Munro"
+#export GIT_COMMITTER_EMAIL="munro.github@gmail.com"
 
 # Hg varialbes
 export HGUSER="Munro"
 export EMAIL="munro.github@gmail.com"
+
+alias rgrep="grep -R --exclude-dir=external --exclude-dir=node_modules"
 
 # Keyring client
 #export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
 
 # Things not quite ready for the year 3000:
 # * Node.js
-if [ -f "`which python2`" ]; then
-    export PYTHON="python2"
-fi
+#if [ -f "`which python2`" ]; then
+#    export PYTHON="python2"
+#fi
 
 if [ -f "$HOME/.nvm/nvm.sh" ]; then
     source ~/.nvm/nvm.sh
@@ -63,7 +65,7 @@ setfontsize () {
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(git django deb node npm pip redis-cli nyan mercurial)
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting npm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,3 +104,5 @@ bindkey "\e[3~" delete-char # Del
 
 # Disable F10 key
 bindkey -s '[21~' ''
+
+
