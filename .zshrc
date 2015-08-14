@@ -52,9 +52,6 @@ if [ -f "$HOME/.nvm/nvm.sh" ]; then
     source ~/.nvm/nvm.sh
 fi
 
-if [ -f "$HOME/.localrc" ]; then
-    source ~/.localrc
-fi
 
 
 # Change font size
@@ -65,7 +62,7 @@ setfontsize () {
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(git django deb node npm pip redis-cli nyan mercurial)
-plugins=(git zsh-syntax-highlighting npm)
+plugins=(git zsh-syntax-highlighting npm pep8 pip pylint python supervisor nyan)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -105,4 +102,8 @@ bindkey "\e[3~" delete-char # Del
 # Disable F10 key
 bindkey -s '[21~' ''
 
+
+if [ -f "$HOME/.localrc" ]; then
+    source ~/.localrc
+fi
 
