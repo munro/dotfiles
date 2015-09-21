@@ -1,0 +1,2 @@
+:def doge const $ return $ unlines [":reload","main"]
+

@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------------
 
 function tab() {
-  local command="cd \\\"$PWD\\\"; clear; "
+  local command="cd \\\"$PWD\\\"; clear"
   (( $# > 0 )) && command="${command}; $*"
 
   the_app=$(
@@ -136,23 +136,6 @@ function quick-look() {
 
 function man-preview() {
   man -t "$@" | open -f -a Preview
-}
-
-function trash() {
-  local trash_dir="${HOME}/.Trash"
-  local temp_ifs="$IFS"
-  IFS=$'\n'
-  for item in "$@"; do
-    if [[ -e "$item" ]]; then
-      item_name="$(basename $item)"
-      if [[ -e "${trash_dir}/${item_name}" ]]; then
-        mv -f "$item" "${trash_dir}/${item_name} $(date "+%H-%M-%S")"
-      else
-        mv -f "$item" "${trash_dir}/"
-      fi
-    fi
-  done
-  IFS=$temp_ifs
 }
 
 function vncviewer() {
