@@ -8,7 +8,7 @@ lazy_source () {
 }
 
 # Setup variables
-export PATH="$HOME/local/bin:$HOME/.cabal/bin:/usr/local/bin:$PATH"
+# export PATH="$HOME/local/bin:$HOME/.cabal/bin:/usr/local/bin:$PATH"
 export EDITOR="vim"
 
 # Git variables
@@ -71,4 +71,3 @@ source $ZSH/oh-my-zsh.sh
 if [ -f "$HOME/.localrc" ]; then
     source ~/.localrc
 fi
-
