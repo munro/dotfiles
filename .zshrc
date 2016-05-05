@@ -71,3 +71,6 @@ source $ZSH/oh-my-zsh.sh
 if [ -f "$HOME/.localrc" ]; then
     source ~/.localrc
 fi
+
+export GOPATH=$HOME/.go
+export PATH=$HOME/.go/bin:$PATH
