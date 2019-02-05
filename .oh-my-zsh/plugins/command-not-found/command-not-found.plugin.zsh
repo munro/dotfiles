@@ -1,5 +1,5 @@
 # Uses the command-not-found package zsh support
-# as seen in http://www.porcheron.info/command-not-found-for-zsh/
+# as seen in https://www.porcheron.info/command-not-found-for-zsh/
 # this is installed in Ubuntu
 
 [[ -e /etc/zsh_command_not_found ]] && source /etc/zsh_command_not_found
@@ -22,4 +22,12 @@ if [ -f /usr/libexec/pk-command-not-found ]; then
         fi
         return $retval
     }
+fi
+
+# OSX command-not-found support
+# https://github.com/Homebrew/homebrew-command-not-found
+if type brew &> /dev/null; then
+  if brew command command-not-found-init > /dev/null 2>&1; then
+    eval "$(brew command-not-found-init)";
+  fi
 fi
