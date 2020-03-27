@@ -35,7 +35,11 @@ export NVM_DIR=~/.nvm
 lazy_source nvm /usr/local/opt/nvm/nvm.sh
 
 # Utilities
-alias rgrep="grep -R --exclude-dir=external --exclude-dir=node_modules"
+alias rgrep="grep -R --exclude-dir=external --exclude-dir=node_modules --exclude-dir=.git '--exclude-dir=.*' \
+    '--exclude=*.ipynb' '--exclude=*.pyc' '--exclude=*.parquet*' '--exclude=*.sqlite*' \
+    '--exclude=*.gz' '--exclude=*.zip' '--exclude=*.bz2' \
+    '--exclude=*.png' '--exclude=*.jpg' '--exclude=*.jpeg' '--exclude=*.gif' '--exclude=*.ico'"
+
 
 # Auto complete
 zstyle ':completion:*' accept-exact '*(N)'
@@ -73,7 +77,7 @@ bindkey "\e[3~" delete-char # Del
 bindkey -s '[21~' ''
 
 # Load oh-my-zsh
-plugins=(git)
+plugins=(git aws)
 source $ZSH/oh-my-zsh.sh
 
 # Local settings
