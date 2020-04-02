@@ -1,5 +1,8 @@
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="munro"
+#ZSH_THEME="munro"
+ZSH_THEME="fino"
+#ZSH_THEME="sonicradish"
+#ZSH_THEME="random"
 DISABLE_AUTO_UPDATE="true"
 
 # find -L /usr/local/opt/ -maxdepth 3 -type d -name gnubin
@@ -32,7 +35,7 @@ export EMAIL="munro.github@gmail.com"
 
 # Node
 export NVM_DIR=~/.nvm
-lazy_source nvm /usr/local/opt/nvm/nvm.sh
+# lazy_source nvm /usr/local/opt/nvm/nvm.sh
 
 # Utilities
 alias rgrep="grep -R --exclude-dir=external --exclude-dir=node_modules --exclude-dir=.git '--exclude-dir=.*' \
