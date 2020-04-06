@@ -1,8 +1,5 @@
 ZSH=$HOME/.oh-my-zsh
-#ZSH_THEME="munro"
 ZSH_THEME="fino"
-#ZSH_THEME="sonicradish"
-#ZSH_THEME="random"
 DISABLE_AUTO_UPDATE="true"
 
 # find -L /usr/local/opt/ -maxdepth 3 -type d -name gnubin
@@ -80,7 +77,7 @@ bindkey "\e[3~" delete-char # Del
 bindkey -s '[21~' ''
 
 # Load oh-my-zsh
-plugins=(git)
+plugins=(git direnv)
 source $ZSH/oh-my-zsh.sh
 
 # Local settings
@@ -88,25 +85,5 @@ if [ -f "$HOME/.localrc" ]; then
     source ~/.localrc
 fi
 
-#export GOPATH=$HOME/.go
-#export PATH=$HOME/.go/bin:$PATH
-#export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
-
-# added by travis gem
-# [ -f /Users/ryan.munro/.travis/travis.sh ] && source /Users/ryan.munro/.travis/travis.sh
-
-# export PS1="\$PS1_PREFIX$PS1"
-
-
-# direnv
-#_direnv_hook() {
-#  eval "$("/usr/local/bin/direnv" export zsh)";
-#}
-#typeset -ag precmd_functions;
-#if [[ -z ${precmd_functions[(r)_direnv_hook]} ]]; then
-#  precmd_functions+=_direnv_hook;
-#fi
-
-
 # brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
-#
+
