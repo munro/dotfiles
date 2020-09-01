@@ -85,5 +85,5 @@ if [ -f "$HOME/.localrc" ]; then
     source ~/.localrc
 fi
 
-# brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
+# brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep vim git
 
