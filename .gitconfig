@@ -21,7 +21,7 @@
 [diff]
 	tool = Kaleidoscope
 [user]
-	email = ryan@submersible.io
+	email = ryan.munro@kw.com
 	name = Ryan Munro
 [filter "hawser"]
 	clean = git hawser clean %f

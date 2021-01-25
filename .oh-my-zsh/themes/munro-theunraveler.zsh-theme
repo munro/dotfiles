@@ -1,6 +1,6 @@
 function ps1_virtual_env() {
-    if [[ -n ${VIRTUAL_ENV_NAME} ]]; then
-        echo " %{$fg[magenta]%}(${VIRTUAL_ENV_NAME})%{$reset_color%}"
+    if [[ -n ${VIRTUAL_ENV} ]]; then
+        echo -n " %{$fg[magenta]%}($(basename ${VIRTUAL_ENV}))%{$reset_color%}"
     fi
 }
 
