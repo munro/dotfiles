@@ -3,7 +3,7 @@
 [branch]
 	autosetuprebase = always
 [alias]
-	k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%cN%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%aN%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset' --abbrev-commit --date=relative
 [merge]
 	ff = false
 	tool = meld
@@ -20,9 +20,6 @@
 	prompt = false
 [diff]
 	tool = Kaleidoscope
-[user]
-	email = ryan.munro@kw.com
-	name = Ryan Munro
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
