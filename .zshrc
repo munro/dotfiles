@@ -4,7 +4,7 @@ fi
 
 # ZSH
 export ZSH=$HOME/.oh-my-zsh
-export ZSH_THEME="munro_v2"
+export ZSH_THEME="../../.oh-my-theme/munro_v2"
 export DISABLE_AUTO_UPDATE="true"
 export ZSH_DISABLE_COMPFIX=true
 export DISABLE_UPDATE_PROMPT=true
@@ -153,7 +153,6 @@ function my_upgrade_oh_my_zsh() {
 		rm -rf ~/.oh-my-zsh
 		git clone --depth=1 --branch=master git@github.com:ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 		rm -rf ~/.oh-my-zsh/.git
-		git checkout HEAD -- ".oh-my-zsh/themes/munro*"
 		git add .oh-my-zsh
 		git commit -m "Upgrade oh my zsh"
 	)
