@@ -9,23 +9,15 @@
 	tool = meld
 [push]
 	default = current
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[difftool]
-	prompt = false
-[mergetool]
-	prompt = false
-[diff]
-	tool = Kaleidoscope
+
+
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
 [core]
 	autocrlf = input
+	excludesfile = ~/.gitignore_global
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -38,3 +30,28 @@
 	email = 500774+munro@users.noreply.github.com
 [pull]
 	rebase = true
+
+[diff]
+    external = difft
+
+# [core]
+#     pager = delta
+
+# [interactive]
+#     diffFilter = delta --color-only
+
+# [delta]
+#     navigate = true    # use n and N to move between diff sections
+#     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+# [merge]
+#     conflictstyle = diff3
+
+# [diff]
+#     colorMoved = default
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
