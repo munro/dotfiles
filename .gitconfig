@@ -1,56 +1,73 @@
-[color]
-ui = true
-[branch]
-autosetuprebase = always
+[user]
+name = Ryan Munro
+email = 500774+munro@users.noreply.github.com
+
 [alias]
 k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%aN%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset' --abbrev-commit --date=relative
-[merge]
-ff = false
-tool = meld
+
+[init]
+defaultBranch = main
+
+[pull]
+rebase = true
+
 [push]
 default = current
 
-[filter "hawser"]
-clean = git hawser clean %f
-smudge = git hawser smudge %f
-required = true
+[color]
+ui = true
+
+[branch]
+autosetuprebase = always
+
+[diff]
+noprefix = true
+
+[merge]
+ff = false
+
 [core]
 autocrlf = input
 excludesfile = ~/.gitignore_global
+
 [filter "lfs"]
 clean = git-lfs clean -- %f
 smudge = git-lfs smudge -- %f
 required = true
 process = git-lfs filter-process
-[init]
-defaultBranch = main
-[user]
-name = Ryan Munro
-email = 500774+munro@users.noreply.github.com
-[pull]
-rebase = true
-
-[diff]
-external = difft
-
-# [core]
-#     pager = delta
-
-# [interactive]
-#     diffFilter = delta --color-only
-
-# [delta]
-#     navigate = true    # use n and N to move between diff sections
-#     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-
-# [merge]
-#     conflictstyle = diff3
 
 # [diff]
-#     colorMoved = default
-[difftool "sourcetree"]
-cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-path =
-[mergetool "sourcetree"]
-cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-trustExitCode = true
+# external = difft
+
+## use `git-delta` tool for pretty diffs!
+[core]
+pager = delta
+
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+navigate = true # use n and N to move between diff sections
+# light = true    # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+side-by-side = true
+line-numbers = true
+features = unobtrusive-line-numbers decorations
+whitespace-error-style = 22 reverse
+hyperlinks = true
+colorMoved = default
+
+# [delta "decorations"]
+# commit-decoration-style = bold yellow box ul
+# file-style = bold
+# file-decoration-style = red box
+# hunk-header-decoration-style = ul
+
+[merge]
+conflictstyle = diff3
+
+[diff]
+colorMoved = default
+
+## use nbdime for diffing notebooks!
+[diff "jupyternotebook"]
+command = git-nbdiffdriver diff
