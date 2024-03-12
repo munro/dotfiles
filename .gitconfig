@@ -1,38 +1,37 @@
 [color]
-	ui = true
+ui = true
 [branch]
-	autosetuprebase = always
+autosetuprebase = always
 [alias]
-	k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%aN%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset' --abbrev-commit --date=relative
+k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%aN%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset' --abbrev-commit --date=relative
 [merge]
-	ff = false
-	tool = meld
+ff = false
+tool = meld
 [push]
-	default = current
-
+default = current
 
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+clean = git hawser clean %f
+smudge = git hawser smudge %f
+required = true
 [core]
-	autocrlf = input
-	excludesfile = ~/.gitignore_global
+autocrlf = input
+excludesfile = ~/.gitignore_global
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
-	process = git-lfs filter-process
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+required = true
+process = git-lfs filter-process
 [init]
-	defaultBranch = main
+defaultBranch = main
 [user]
-	name = Ryan Munro
-	email = 500774+munro@users.noreply.github.com
+name = Ryan Munro
+email = 500774+munro@users.noreply.github.com
 [pull]
-	rebase = true
+rebase = true
 
 [diff]
-    external = difft
+external = difft
 
 # [core]
 #     pager = delta
@@ -50,8 +49,8 @@
 # [diff]
 #     colorMoved = default
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+path =
 [mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+trustExitCode = true

@@ -17,10 +17,10 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 export HISTSIZE=100000000
-setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt EXTENDED_HISTORY       # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY     # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY          # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history.
 unsetopt histignoredups
 
 # Homebrew
@@ -33,7 +33,6 @@ export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 export PATH="$HOMEBREW_REPOSITORY/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-
 
 # Alias
 if command -v "lsd" >/dev/null 2>&1; then
@@ -160,19 +159,19 @@ zstyle ':completion:*' accept-exact '*(N)'
 # Cool functions
 function setup_brew_dependencies() {
     echo brew install \
-    `# apps` \
-    karabiner-elements protonmail-bridge protonvpn youtube-dl spotify \
-    mattermost vlc qbittorrent anki discord figma wireshark mactex \
-    `# shell` \
-    zsh coreutils curl findutils gawk gettext gnu-getopt gnu-indent \
-    rsync telnet vim wget grep gnu-sed gnu-tar graphviz jq autossh \
-    iperf \
-    `# dev tools` \
-    git direnv gnutls openssl@1.1 python tmate tmux poetry nvim \
-    chromedriver miniconda fnm nodejs rustup geckodriver \
-    `# misc` \
-    cowsay lolcat nyancat \
-    homebrew/cask-drivers/logitech-camera-settings
+        `# apps` \
+        karabiner-elements protonmail-bridge protonvpn youtube-dl spotify \
+        mattermost vlc qbittorrent anki discord figma wireshark mactex \
+        `# shell` \
+        zsh coreutils curl findutils gawk gettext gnu-getopt gnu-indent \
+        rsync telnet vim wget grep gnu-sed gnu-tar graphviz jq autossh \
+        iperf \
+        `# dev tools` \
+        git direnv gnutls openssl@1.1 python tmate tmux poetry nvim \
+        chromedriver miniconda fnm nodejs rustup geckodriver \
+        `# misc` \
+        cowsay lolcat nyancat \
+        homebrew/cask-drivers/logitech-camera-settings
 }
 function poetryrun() {
     project_dir=$1
@@ -187,8 +186,8 @@ function lazy_source() {
 }
 function print_colors() {
     for x in {0..8}; do for i in {30..37}; do
-            for a in {40..47}; do echo -ne "\e[$x;$i;$a""m\\\e[$x;$i;$a""m\e[0;37;40m "; done
-            echo
+        for a in {40..47}; do echo -ne "\e[$x;$i;$a""m\\\e[$x;$i;$a""m\e[0;37;40m "; done
+        echo
     done; done
     echo ""
 }
