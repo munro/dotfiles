@@ -36,7 +36,6 @@ export PATH="/usr/local/sbin:$PATH"
 
 
 # Alias
-
 if command -v "lsd" >/dev/null 2>&1; then
     alias ls="lsd"
 fi
