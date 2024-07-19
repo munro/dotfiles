@@ -42,6 +42,7 @@ process = git-lfs filter-process
 ## use `git-delta` tool for pretty diffs!
 [core]
 pager = delta
+hooksPath = ~/.config/git/hooks
 
 [interactive]
 diffFilter = delta --color-only

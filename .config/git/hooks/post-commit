@@ -1,0 +1,5 @@
+if [[ $(git log -1 --format="%an") == $(git config --global user.name) ]]; then
+    echo 🍀🍀🍀🍀🍀🍀🍀🍀 Feeling Lucky 🍀🍀🍀🍀🍀🍀🍀🍀
+    /usr/bin/time lucky_commit 13370000
+    echo 🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀
+fi
