@@ -35,7 +35,7 @@ function git_develop_branch() {
 function git_main_branch() {
   command git rev-parse --git-dir &>/dev/null || return
   local ref
-  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default,master}; do
+  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default,stable,master}; do
     if command git show-ref -q --verify $ref; then
       echo ${ref:t}
       return 0
@@ -147,8 +147,8 @@ function gbds() {
     done
 }
 
-alias gbgd='LANG=C git branch --no-color -vv | grep ": gone\]" | awk '"'"'{print $1}'"'"' | xargs git branch -d'
-alias gbgD='LANG=C git branch --no-color -vv | grep ": gone\]" | awk '"'"'{print $1}'"'"' | xargs git branch -D'
+alias gbgd='LANG=C git branch --no-color -vv | grep ": gone\]" | cut -c 3- | awk '"'"'{print $1}'"'"' | xargs git branch -d'
+alias gbgD='LANG=C git branch --no-color -vv | grep ": gone\]" | cut -c 3- | awk '"'"'{print $1}'"'"' | xargs git branch -D'
 alias gbm='git branch --move'
 alias gbnm='git branch --no-merged'
 alias gbr='git branch --remote'
@@ -165,6 +165,7 @@ alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
 alias gclean='git clean --interactive -d'
 alias gcl='git clone --recurse-submodules'
+alias gclf='git clone --recursive --shallow-submodules --filter=blob:none --also-filter-submodules'
 
 function gccd() {
   setopt localoptions extendedglob
@@ -252,6 +253,7 @@ alias gignored='git ls-files -v | grep "^[[:lower:]]"'
 alias gfg='git ls-files | grep'
 alias gm='git merge'
 alias gma='git merge --abort'
+alias gmc='git merge --continue'
 alias gms="git merge --squash"
 alias gmom='git merge origin/$(git_main_branch)'
 alias gmum='git merge upstream/$(git_main_branch)'
@@ -349,6 +351,7 @@ alias grhh='git reset --hard'
 alias grhk='git reset --keep'
 alias grhs='git reset --soft'
 alias gpristine='git reset --hard && git clean --force -dfx'
+alias gwipe='git reset --hard && git clean --force -df'
 alias groh='git reset origin/$(git_current_branch) --hard'
 alias grs='git restore'
 alias grss='git restore --source'
