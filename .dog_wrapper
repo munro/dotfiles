@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "-x" ]]; then
+    IFS="."
+    read a b c d <<<"$2"
+    unset IFS
+    echo REVERSING dog PTR $d.$c.$b.$a.in-addr.arpa
+    dog PTR $d.$c.$b.$a.in-addr.arpa
+else
+    dog "$@"
+fi
