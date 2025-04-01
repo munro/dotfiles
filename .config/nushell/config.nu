@@ -1,0 +1,1 @@
+/Users/toothpaste/Library/Application Support/nushell/config.nu

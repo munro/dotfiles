@@ -8,6 +8,8 @@ fi
 
 fpath+=~/.zfunc
 
+export UV_COMPILE_BYTECODE=1
+
 # ZSH
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_THEME="../../.oh-my-theme/munro_v2"
@@ -23,6 +25,7 @@ setopt EXTENDED_HISTORY       # Write the history file in the ":start:elapsed;co
 setopt INC_APPEND_HISTORY     # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY          # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history.
+setopt no_nomatch
 unsetopt histignoredups
 
 # Homebrew
@@ -39,7 +42,7 @@ export PATH="/usr/local/sbin:$PATH"
 
 # Alias
 if command -v "lsd" >/dev/null 2>&1; then
-    alias ls="lsd"
+    alias ls="lsd -tr"
 fi
 if command -v "rg" >/dev/null 2>&1; then
     alias rg="rg --max-columns=1000"
@@ -106,6 +109,24 @@ if [ -d "$HOME/.pyenv/bin" ]; then
 fi
 
 # Bindkeys!
+# autoload -Uz select-word-style
+# select-word-style bash
+
+# autoload -U select-word-style
+# select-word-style bash
+
+autoload -U select-word-style
+select-word-style shell
+
+# function smart-backward-kill-word() {
+#   local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<> '
+#   zle backward-kill-word
+# }
+# zle -N smart-backward-kill-word
+
+# # Now rebind Control + W to use the new word style behavior
+
+# bindkey '^W' smart-backward-kill-word
 bindkey "\e[1~" beginning-of-line    # Home
 bindkey "\e[4~" end-of-line          # End
 bindkey "\e[5~" beginning-of-history # PageUp
@@ -137,6 +158,27 @@ bindkey "\e[3~" delete-char # Del
 # Disable F10 key
 bindkey -s '\e[21~' ''
 
+
+# bindkey "${terminfo[khome]}" beginning-of-line    # Home
+# bindkey "${terminfo[kend]}" end-of-line           # End
+# bindkey "${terminfo[kpp]}" beginning-of-history   # PageUp
+# bindkey "${terminfo[knp]}" end-of-history         # PageDown
+# bindkey "${terminfo[kich1]}" quoted-insert        # Insert
+# bindkey "${terminfo[kdch1]}" delete-char          # Delete
+# bindkey "${terminfo[kcub1]}" backward-word        # Ctrl + Left Arrow
+# bindkey "${terminfo[kcuf1]}" forward-word         # Ctrl + Right Arrow
+# bindkey "^[[Z" reverse-menu-complete              # Shift + Tab
+
+# # Compatibility for various terminals
+# bindkey "${terminfo[khome]}" beginning-of-line    # Home for rxvt
+# bindkey "${terminfo[kend]}" end-of-line           # End for rxvt
+# bindkey "${terminfo[khome]}" beginning-of-line    # Home for non-RH/Debian xterm
+# bindkey "${terminfo[kend]}" end-of-line           # End for non-RH/Debian xterm
+# bindkey "${terminfo[khome]}" beginning-of-line    # Home for freebsd console
+# bindkey "${terminfo[kend]}" end-of-line           # End for freebsd console
+# bindkey "^[[1;5D" backward-word                   # Ctrl + Left Arrow (alternative)
+# bindkey "^[[1;5C" forward-word                    # Ctrl + Right Arrow (alternative)
+# bindkey -s "${terminfo[kf10]}" ''                 # Disable F10 key
 # Cool ls colors
 if [ -f "$HOME/.ls_colors.sh" ]; then
     source ~/.ls_colors.sh
@@ -281,3 +323,240 @@ zstyle ':completion::(^approximate*):*:functions'   ignored-patterns '_*'    # I
 # zstyle ':completion:*:manuals.*'                    insert-sections   true
 # zstyle ':completion:*:man:*'                        menu yes select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+
+
+### BONUS
+
+
+# options
+# Globbing
+setopt   ExtendedGlob
+# Misc
+setopt   RcQuotes RecExact LongListJobs TransientRprompt MenuComplete MagicEqualSubst InteractiveComments CompleteInWord PromptSubst
+# History
+setopt   ExtendedHistory IncAppendHistory${${${+options[incappendhistorytime]}/1/Time}/0} HistIgnoreDups
+# pushd settings
+setopt   AutoPushd PushdMinus AutoCd PushdToHome PushdSilent PushdIgnoreDups
+# Stuff we don't want
+unsetopt BgNice AutoParamSlash Hup Correct CorrectAll Beep
+
+HISTFILE=~/.zsh_history
+[[ -f ~/.config/.zsh_history ]] && HISTFILE=~/.config/.zsh_history
+HISTSIZE=15000
+SAVEHIST=15000
+MAILCHECK=1
+mailpath+=( /var/spool/mail/${USER}(/N) ~/MailDir(/N) )
+[[ $ZSH_VERSION == *-dev* ]] && manpath=( ~/.local/share/man(/N) )
+ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;'
+READNULLCMD=less
+TIMEFMT=$(
+  print -rP '%B %%J %b%K{60}%F{183} %%U %K{183}%F{60} user'\
+    '%K{60}%F{183} %%S %K{183}%F{60} system'\
+    '%K{60}%F{183} %%P %K{183}%F{60} cpu'\
+    '%K{60}%F{183} %%*E %K{183}%F{60} total %f%k'
+)
+REPORTTIME=1
+WATCHFMT=$(
+  print -rP '%K{60}%F{183} %%n %K{183}%F{60} has %%a %%l @ %%D{%%T} %%D %f%k'
+)
+
+### MAS
+
+
+format_style() {
+  if (( ${term_colors:=$(tput colors)} == 8 )); then
+    print -r -- "$@"
+  else
+    print -r -- "%K{183}%B%F{60} $1 %K{60}%F{183} $argv[2,-1] %f%k"
+  fi
+}
+zstyle ':prompt:arx:'               users             llua root
+zstyle ':prompt:arx:'               primary-color     60  # 24  39 199
+zstyle ':prompt:arx:'               secondary-color   111 # 45 105 210
+zstyle ':prompt:arx:'               delimiter-color   133
+zstyle ':prompt:arx:'               primary-color-8colors \
+                                                      6
+zstyle ':prompt:arx:'               secondary-color-8colors \
+                                                      6
+zstyle ':prompt:arx:'               delimiter-color-8colors \
+                                                      5
+zstyle ':prompt:arx:vcs_info:'      hosts             {netslum,sakubo,corbenik,caerleon-medb}{,.mac-anu.org}
+# separate man page completion by section.
+zstyle -e ':completion:*:manuals.*' insert-sections   'if [[ $OSTYPE = solaris* ]]; then reply=(false); else reply=(true); fi'
+zstyle ':completion:*:manuals'      separate-sections true
+# per-match descriptions (if available)
+zstyle ':completion:*'              verbose           true
+# descriptions of commands (if available)
+zstyle ':completion:*'              extra-verbose     true
+# default seperator between option -- description, update list-colors if changed.
+zstyle ':completion:*'              list-separator    '::'
+zstyle ':completion:*'              completer         _expand _complete _correct _approximate
+# message telling you what you are completing
+zstyle ':completion:*'              format            "$(format_style Completing: %d)"
+zstyle ':completion:*'              select-prompt     "$(format_style Menu-selection: current selection at %p)"
+# this style is used by `_arguments --'
+zstyle ':completion:*'              auto-description  "specify: %d"
+# group completions by type
+zstyle ':completion:*'              group-name        ''
+# if there are atleast 0 matches, use menu selection
+zstyle ':completion:*'              menu              select
+# COLOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUURSSSSSSSSSSSS
+zstyle ':completion:*:default'      list-colors       'ma=38;5;183;48;5;60' 'tc=01;36' "${(s.:.)ZLS_COLORS}"
+zstyle ':completion:*:(options|flags)' \
+                                    list-colors       '=(#s)(#b)[[:space:]]#*[[:space:]]#[[:space:]]#(::)[[:space:]]#(*)(#B)(#e)=0=38;5;111=38;5;60'
+zstyle ':completion::complete:vim:option-u-1:*' \
+                                    fake              NONE
+zstyle ':completion:*:(scp|ssh|rsync|sftp|qemu-system-*):*' \
+                                    tag-order         'users:-normal:local\ user users hosts:-normal:hashed\ host hosts'
+# username completion
+zstyle ':completion:*:users'        ignored-patterns  '*'
+zstyle ':completion:*:users'        fake-always       ${(A)reply::={llua,arx,root}}
+zstyle ':completion:*:users-normal' ignored-patterns  $reply
+# hostname completion
+zstyle ':completion:*:hosts'        ignored-patterns  '*'
+zstyle ':completion:*:hosts'        fake-always       ${(A)reply::={umbra,ansuz,corbenik,netslum,nypumi,caerleon-medb,al-fadel,sakubo,tarvos,aurora,fidchell,login1,login2}}
+zstyle ':completion:*:hosts-normal' ignored-patterns  $reply
+# completion of pids
+zstyle ':completion:*:processes'    format            "$(format_style Completing: %d "(pid user lstart %%%cpu %%%mem rss args)")"
+zstyle ':completion:*:processes'    command           'ps -o pid,user,lstart,pcpu,pmem,rss,args -A'
+zstyle ':completion:*:nsenter:*:processes' \
+                                    format            "$(format_style Completing: %d "(pid command systemd-machined-id utsns netns mntns pidns ipcns userns)")"
+zstyle ':completion:*:nsenter:*:processes' \
+                                    command           'ps -o pid,comm,machine,utsns,netns,mntns,pidns,ipcns,userns -A'
+# completion of process names
+zstyle ':completion:*:killall:*'    command           'ps -o comm -A'
+# grouping stuff menu selection mostly
+zstyle ':completion::complete:-subscript-::' \
+                                    tag-order         'indexes association-keys'
+zstyle ':completion:*:*:configure:*' \
+                                    tag-order         'options:-enable:enable\ feature options:-other options:-disable:disable\ feature'
+zstyle ':completion:*:configure:*:options-enable' \
+                                    ignored-patterns  '^--enable-*'
+zstyle ':completion:*:configure:*:options-other' \
+                                    ignored-patterns  '--(dis|en)able-*'
+zstyle ':completion:*:configure:*:options-disable' \
+                                    ignored-patterns  '^--disable-*'
+zstyle ':completion::complete:pacman:argument-rest:' \
+                                    group-order       repo_packages packages
+zstyle -e ':completion:*:*:systemctl-(((re|)en|dis)able|status|(*re|)start|reload*):*' \
+                                    tag-order         'local type; for type in service template target timer socket mount slice device busname
+                                                         reply+=( systemd-units:-${type}:${type} )
+                                                         reply=( "$reply systemd-units:-misc:misc" )'
+zstyle ':completion:*:systemd-units-service' \
+                                    ignored-patterns  '^*.service'
+zstyle ':completion:*:systemd-units-template' \
+                                    ignored-patterns  '^*@'
+zstyle ':completion:*:systemd-units-target' \
+                                    ignored-patterns  '^*.target'
+zstyle ':completion:*:systemd-units-timer' \
+                                    ignored-patterns  '^*.timer'
+zstyle ':completion:*:systemd-units-socket' \
+                                    ignored-patterns  '^*.socket'
+zstyle ':completion:*:systemd-units-mount' \
+                                    ignored-patterns  '^*.mount'
+zstyle ':completion:*:systemd-units-slice' \
+                                    ignored-patterns  '^*.slice'
+zstyle ':completion:*:systemd-units-device' \
+                                    ignored-patterns  '^*.device'
+zstyle ':completion:*:systemd-units-busname' \
+                                    ignored-patterns  '^*.busname'
+zstyle ':completion:*:systemd-units-misc' \
+                                    ignored-patterns  '*(@|.(service|target|timer|socket|mount|slice|device|busname))'
+zstyle ':completion:*:*:machinectl*:*' \
+                                    tag-order         'systemd-machines:-qemu:qemu\ virtual\ machine systemd-machines:-container:container systemd-machines:-misc:machine'
+zstyle ':completion:*:systemd-machines-misc' \
+                                    ignored-patterns  '(lxc|qemu)-*'
+zstyle ':completion:*:systemd-machines-container' \
+                                    ignored-patterns  '^lxc-*'
+zstyle ':completion:*:systemd-machines-qemu' \
+                                    ignored-patterns  '^qemu-*'
+# misc stuff
+zstyle ':completion:*'              special-dirs      ..
+zstyle :completion::complete:-command-::commands \
+                                    ignored-patterns  restart reboot vendor_perl
+zstyle :completion::complete:-tilde-:: \
+                                    group-order       named-directories users
+zstyle -e ':completion::complete:pkg-install:*:*' \
+                                    tag-order         'if [[ $IPREFIX$PREFIX$SUFFIX$ISUFFIX = */* ]]; then reply=("!packages" -); fi'
+zstyle ':completion:*:*:(lua|lua5[12]|lua-#5.[12]):*:*' \
+                                    file-patterns     '*(-/):directories:directories *.(#i)lua(-.):globbed-files:lua\ scripts ^*.(#i)lua(-.):other-files:other\ files'
+# avoiding _perl's restrictive _files glob
+zstyle ':completion:*:*:perl:*:*'   file-patterns     '*(-/):directories:directories *.(p[ml]|PL|t)(-.):globbed-files:perl\ scripts *~*.(p[ml]|PL|t)(^/):other-files:other\ files'
+zstyle ':completion::complete:perl:option-M-1:' \
+                                    use-cache         true
+zstyle ':completion::complete:salt(|-cp|-call):minions:' \
+                                    cache-ttl         60 days
+zstyle ':completion::complete:journalctl:option-b-1:' \
+                                    sort              false
+zstyle ':completion::complete:reautoload:argument-rest:' \
+                                    tag-order         'functions:-nounderscore functions:-underscore'
+zstyle ':completion:*:functions-nounderscore'         ignored-patterns '_*'
+zstyle ':completion:*:functions-underscore'           ignored-patterns '^_*'
+# complete jails from /usr/jail when -c is used
+zstyle -e ':completion::complete:jail:argument-rest:jails' \
+                                                      fake '[[ -v opt_args[(i)-c] ]] && reply=(/usr/jail/^freebsd*(:t))'
+zstyle ':completion:*'              cache-path        ${ZDOTDIR:-$HOME/.config}/zcompcache
+zstyle ':completion:*:(mpc|zypper|sysrc|ansible(|-doc)|salt(|-cp|-call|-run|-key)):*' \
+                                    use-cache         true
+zstyle ':completion:most-recent-file:*' \
+                                    match-original    both
+zstyle ':completion:most-recent-file:*' \
+                                    file-sort         modification
+zstyle ':completion:most-recent-file:*' \
+                                    file-patterns     '*:all\ files'
+zstyle ':completion:most-recent-file:*' \
+                                    hidden            all
+zstyle ':completion:most-recent-file:*' \
+                                    completer         _files
+zstyle ':completion:*:events'       range             50
+zstyle ':completion:*'              insert-tab        false
+zstyle ':completion:*'              list-dirs-first   true # may cause completers to fail, look into why.
+zstyle ':completion:*'              accept-exact      false
+zstyle ':completion:*'              accept-exact-dirs true
+# see COMPLETION MATCHING CONTROL in zshcompwid for details.
+# when completion is invoked and zsh compares the word you typed with possible choices, a type of pattern matching(not exactly like what is used on the cli)
+# is used and by default it appends `*' to the current word and any choices that doesn't match the pattern is omitted.
+# an example being typing ..u<TAB> with a possible choice of `comp.sources.unix', with the default behavior `..u*' would not match `comp.sources.unix' thus not be presented.
+# the matcher/matcher-list style controls what the pattern ultimately results in. the entire completion system is ran for each entry, thus twice in my config.
+# m:{[:lower:][:upper:]}={[:upper:][:lower:]} lets any lowercase character in the current word be completed to itself or its uppercase counterpart and the same with
+# uppercase characters matching itself or their lowercase counterpart.
+# you can think of it in filename generation terms as: (#i)..u
+# l:|=* prepends * to the current-word/match-pattern for filtering possible choices.
+# you can think of it in filename generation terms as: *(#i)..u
+# r:|=* appends * to the current-word/match-pattern for filtering possible choices.
+# you can think of it in filename generation terms as: *(#i)..u*
+# r:|[._-]=** is checking the word for substrings matching empty string (the left side of the |) that has characters ., _ or - to the right of it.
+# effectively matching anywhere those three characters appear and inserting a ** after the empty string. note this `**' is different than recursive globbing.
+# `*' would match up to the anchor pattern of [._-] but `**' will match the anchor too.
+# to illustrate the difference:
+# _foo() { local expl; _wanted usenet-groups expl group compadd -M 'r:|[._-]=*' comp.sources.unix }; compdef _foo foo
+# foo c.s.u<TAB> # will insert comp.sources.unix
+# foo .u<TAB>    # will not
+# you can think of it in filename generation terms as: *(#i)*.*.u*
+# _foo() { local expl; _wanted usenet-groups expl group compadd -M 'r:|[._-]=**' comp.sources.unix }; compdef _foo foo
+# foo c.s.u<TAB> # will insert comp.sources.unix
+# foo .u<TAB>    # will also insert comp.sources.unix
+# this is where the comparsion to filename generation kinda breaks down because its not like: *(#i)**.**.u* but kinda like *(#i)****u*
+zstyle ':completion:*'              matcher-list      '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=* l:|=*'
+zstyle ':completion:*'              use-compctl       false
+zstyle ':completion:*'              rehash            true
+autoload -Uz compinit
+compinit
+
+
+# Prompt stuff
+autoload -Uz promptinit; promptinit
+prompt arx >/dev/null 2>&1
+
+zle -C most-recent-file menu-complete _generic
+if [[ $OSTYPE == *linux* ]]; then
+  if [[ -f /etc/arch-release ]]; then
+    AUTOREMOVE() sudo pacman -R ${(of)"$(pacman -Qdtq)"}
+    AUTOCLEAN() sudo pacman -Sc
+  fi
+fi
+
+# unalias -m '*'
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/toothpaste/.cache/lm-studio/bin"
