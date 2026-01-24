@@ -1,0 +1,8 @@
+*~
+.DS_Store
+**/.claude
+**/.cursor
+**/.cursorignore
+**/.cursorrules
+**/.envrc
+**/scratch

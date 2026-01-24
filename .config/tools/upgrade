@@ -1,0 +1,63 @@
+#!/usr/bin/env nu
+
+def main [] {
+    cd ~
+
+    let steps = [
+        {
+            title: "🎨 Update LS_COLORS"
+            desc: "Fetching latest LS_COLORS from trapd00r..."
+            cmd: "curl -s https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh | save -f ~/.ls_colors.sh"
+        }
+        {
+            title: "📡 Updating Homebrew"
+            desc: "Fetching latest formulae definitions from GitHub..."
+            cmd: "brew update"
+        }
+        {
+            title: "📦 Bundle Sync"
+            desc: "Installing from Brewfile, cleaning unlisted, upgrading existing..."
+            cmd: "brew bundle --clean --upgrade"
+        }
+        {
+            title: "⬆️  Greedy Upgrade"
+            desc: "Upgrading ALL casks including auto-updating ones..."
+            cmd: "brew upgrade --greedy"
+        }
+        {
+            title: "🗑️  Autoremove"
+            desc: "Removing orphaned dependencies no longer needed..."
+            cmd: "brew autoremove"
+        }
+        {
+            title: "🧹 Final Cleanup"
+            desc: "Removing orphaned packages not in Brewfile..."
+            cmd: "brew bundle cleanup --force"
+        }
+    ]
+
+    print $"(ansi yellow_bold)🍺 ═══════════════════════════════════════════════════ 🍺(ansi reset)"
+    print $"(ansi yellow_bold)   🚀 HOMEBREW UPGRADE EXTRAVAGANZA 🚀(ansi reset)"
+    print $"(ansi yellow_bold)🍺 ═══════════════════════════════════════════════════ 🍺(ansi reset)\n"
+
+    for $i in 0..<($steps | length) {
+        let step = $steps | get $i
+        let n = $i + 1
+        let total = $steps | length
+        let pct = ($n * 100 / $total | into int)
+        let filled = ($n * 40 / $total | into int)
+        let bar = ("█" | fill -c '█' -w $filled) + ("░" | fill -c '░' -w (40 - $filled))
+
+        print $"\n(ansi cyan)[(ansi reset)(ansi cyan)($bar)(ansi reset)(ansi cyan)](ansi reset) (ansi yellow)($pct)%(ansi reset)"
+        print $"(ansi magenta_bold)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━(ansi reset)"
+        print $"(ansi green_bold)✨ Step ($n)/($total): ($step.title)(ansi reset)"
+        print $"(ansi cyan)   ($step.desc)(ansi reset)"
+        print $"(ansi magenta_bold)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━(ansi reset)\n"
+        print $"(ansi green)$(ansi reset) ($step.cmd)"
+        nu -c $step.cmd
+    }
+
+    print $"\n(ansi green_bold)🎉 ═══════════════════════════════════════════════════ 🎉(ansi reset)"
+    print $"(ansi green_bold)   ✅ ALL DONE! Your system is fresh and clean! ✅(ansi reset)"
+    print $"(ansi green_bold)🎉 ═══════════════════════════════════════════════════ 🎉(ansi reset)\n"
+}

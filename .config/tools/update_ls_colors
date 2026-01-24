@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+curl https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh > ~/.ls_colors.sh

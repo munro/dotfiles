@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+sudo fs_usage -w -f filesys mds_stores

@@ -1,0 +1,305 @@
+" =============================================================================
+" CORE SETTINGS
+" =============================================================================
+
+" -----------------------------------------------------------------------------
+" General
+" -----------------------------------------------------------------------------
+let mapleader = " "             " Space as leader key
+nnoremap <Space> <Nop>          " Disable default space behavior
+set hidden                      " Allow switching buffers without saving
+set history=200                 " Command history size
+set mouse=a                     " Enable mouse support
+set backspace=indent,eol,start  " Backspace behavior
+set timeout timeoutlen=3000 ttimeoutlen=100
+set clipboard=unnamed,unnamedplus  " Use system clipboard
+
+" -----------------------------------------------------------------------------
+" UI
+" -----------------------------------------------------------------------------
+set number                      " Line numbers
+set ruler                       " Cursor position
+set showcmd                     " Show partial commands
+set showmatch                   " Highlight matching brackets
+set cursorline                  " Highlight current line
+set wildmenu                    " Command completion menu
+set wildmode=longest:full       " Complete longest common string
+set laststatus=2                " Always show status line
+set scrolloff=5                 " Keep 5 lines visible above/below cursor
+set splitright                  " Vertical splits open to the right
+set splitbelow                  " Horizontal splits open below
+
+" -----------------------------------------------------------------------------
+" Tabs & Indentation
+" -----------------------------------------------------------------------------
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+set expandtab
+set autoindent
+set colorcolumn=81,161
+
+" -----------------------------------------------------------------------------
+" Search
+" -----------------------------------------------------------------------------
+set incsearch                   " Incremental search
+set hlsearch                    " Highlight matches
+set ignorecase                  " Case insensitive by default
+set smartcase                   " Case sensitive if uppercase in search
+
+" Clear search highlight with double-Esc
+nnoremap <Esc><Esc> :nohlsearch<CR>
+
+" -----------------------------------------------------------------------------
+" Files & Directories
+" -----------------------------------------------------------------------------
+set dir=$HOME/.config/vim/tmp
+set viminfofile=$HOME/.config/vim/viminfo
+set viminfo='100,<1000,s100,h  " Save marks, registers (up to 1000 lines), no hlsearch
+set undofile                    " Persistent undo across sessions
+set undodir=$HOME/.config/vim/undo
+set title titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+set wildignore+=*.o,*.obj,.git,*.min.js,*.png,*.class,*.jpg,*.jar,*.pack
+set wildignore+=*.idx,*.gif,*.apk,*.dmg,*.exe,*.dll,*.bak,*.orig,*.swp
+set wildignore+=*.swo,*.pyc,*.swf,*.pdf,*.psd,*.zip,*.flv,*.ttf,*.gz
+set wildignore+=*.gpg,*.fla,node_modules,*.a,*.so,*.hi,dist/*
+
+" -----------------------------------------------------------------------------
+" Bell (disable)
+" -----------------------------------------------------------------------------
+set visualbell t_vb=
+set t_vb=
+
+" =============================================================================
+" COLORS & APPEARANCE
+" =============================================================================
+
+set background=dark
+if has('termguicolors') && $TERM_PROGRAM != 'Apple_Terminal'
+  set termguicolors
+endif
+
+" =============================================================================
+" GVIM
+" =============================================================================
+
+set guifont=Ubuntu\ Mono\ 11
+set guioptions-=T               " No toolbar
+set guioptions-=m               " No menu
+set guioptions-=l               " No left scrollbar
+set guioptions-=r               " No right scrollbar
+set guioptions-=b               " No bottom scrollbar
+set guioptions-=L               " No left scrollbar on split
+
+" =============================================================================
+" KEY BINDINGS
+" =============================================================================
+
+" Visual shifting (stay in visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Sudo write
+cmap w!! w !sudo tee % >/dev/null
+
+" Typo fixes
+com! Q q
+com! W w
+com! Wq wq
+com! WQ wq
+com! Bd bd
+com! BD bd
+
+" Cursor shape: line in insert mode, block in normal
+" DECSCUSR escape codes work across most terminals
+let &t_SI = "\033[6 q"          " Insert: steady bar
+let &t_EI = "\033[2 q"          " Normal: steady block
+let &t_SR = "\033[4 q"          " Replace: steady underline
+" Reset cursor on vim exit
+autocmd VimLeave * let &t_me = "\033[0 q"
+
+" =============================================================================
+" FILETYPE DETECTION
+" =============================================================================
+
+augroup filetypes
+  autocmd!
+  autocmd BufEnter ?akefile* set noexpandtab tabstop=8 shiftwidth=8
+  autocmd BufEnter */debian/rules set noexpandtab tabstop=8 shiftwidth=8
+  autocmd BufRead,BufNewFile *.cpp,*.h set syntax=cpp11
+  autocmd BufRead,BufNewFile *.mxml set filetype=mxml
+  autocmd BufRead,BufNewFile *.as set filetype=actionscript
+  autocmd BufRead,BufNewFile *.co set filetype=coffee
+  autocmd BufRead,BufNewFile *.less set filetype=less
+  autocmd BufRead,BufNewFile *.php.tpl set filetype=php
+  autocmd BufRead,BufNewFile *.lang set filetype=lang
+  autocmd BufRead,BufNewFile *.m set filetype=objc
+augroup END
+
+" =============================================================================
+" PLUGIN SETTINGS
+" =============================================================================
+
+let g:github_user = 'munro'
+let g:github_token = $GITHUB_TOKEN
+
+" =============================================================================
+" PLUGINS (vim-plug)
+" =============================================================================
+
+" Auto-install vim-plug if missing
+let data_dir = '~/.config/vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.config/vim/plugged')
+
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'             " Git diff in gutter
+
+" LSP & Completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Syntax highlighting (for languages without LSP)
+Plug 'sheerun/vim-polyglot'
+
+" Utilities
+Plug 'vim-scripts/restore_view.vim'     " Restore cursor, folds, scroll
+Plug 'tpope/vim-commentary'             " gcc to comment
+Plug 'tpope/vim-surround'               " cs'" to change quotes
+Plug 'tpope/vim-repeat'                 " . works with plugins
+Plug 'wfxr/minimap.vim'                 " Code minimap
+
+" Colorschemes
+Plug 'flazz/vim-colorschemes'
+Plug 'tomasiser/vim-code-dark'
+
+call plug#end()
+
+" Auto-install missing plugins on startup
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+" Auto-install coc extensions if coc.nvim is installed
+let g:coc_global_extensions = ['coc-pyright', '@yaegassy/coc-ruff', 'coc-json', 'coc-yaml']
+
+" =============================================================================
+" POST-PLUGIN CONFIG
+" =============================================================================
+
+colorscheme codedark " codedark xcode xcode-default ayu monokain
+
+" Color column styling (subtle dark)
+highlight! ColorColumn guibg=#111111 ctermbg=233
+
+" Inlay hints styling (darker gray, italic)
+highlight! CocInlayHint guifg=#555555 ctermfg=240 gui=italic cterm=italic
+
+" -----------------------------------------------------------------------------
+" Minimap
+" -----------------------------------------------------------------------------
+let g:minimap_width = 10
+let g:minimap_auto_start = 1
+let g:minimap_git_colors = 1              " Show git diff colors
+let g:minimap_highlight_search = 1        " Show search matches
+let g:minimap_highlight_range = 1         " Show visible range
+nnoremap <leader>m :MinimapToggle<CR>
+
+" -----------------------------------------------------------------------------
+" GitGutter
+" -----------------------------------------------------------------------------
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+
+" fzf keybindings
+nnoremap <C-p> :Files<CR>
+nnoremap <F2> :Buffers<CR>
+nnoremap <leader>c :Colors<CR>
+
+" Reload vimrc
+nnoremap <leader>r :source $MYVIMRC<CR>:echo "Config reloaded!"<CR>
+
+" -----------------------------------------------------------------------------
+" coc.nvim configuration
+" -----------------------------------------------------------------------------
+
+" Use tab for trigger completion with characters ahead and navigate
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent! call CocActionAsync('highlight')
+
+" Symbol renaming
+nmap <leader>rn <Plug>(coc-rename)
+
+" Format selected code
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format)
+
+" Organize imports
+nmap <leader>i  :CocCommand ruff.executeOrganizeImports<CR>
+
+" Auto organize imports and format on save for Python
+autocmd BufWritePre *.py silent! call CocAction('runCommand', 'ruff.executeOrganizeImports')
+autocmd BufWritePre *.py silent! call CocAction('runCommand', 'ruff.executeFormat')
+
+" Apply code action to the selected region
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" =============================================================================
+" LOCAL OVERRIDES
+" =============================================================================
+
+if filereadable($HOME . "/.vimrc.local")
+  source $HOME/.vimrc.local
+endif
+
+filetype plugin indent on

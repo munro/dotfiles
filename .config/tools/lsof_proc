@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+if [[ -n "$1" ]]; then
+  sudo lsof -p $(pgrep -f "$1" | tr '\n' ',') 2>/dev/null
+else
+  lsof
+fi

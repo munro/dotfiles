@@ -1,0 +1,88 @@
+# =============================================================================
+# USER IDENTITY
+# =============================================================================
+
+[user]
+name = Ryan Munro
+email = 500774+munro@users.noreply.github.com
+
+# =============================================================================
+# ALIASES
+# =============================================================================
+
+[alias]
+k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%aN%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset' --abbrev-commit --date=relative
+
+# =============================================================================
+# CORE SETTINGS
+# =============================================================================
+
+[init]
+defaultBranch = main
+
+[core]
+autocrlf = input
+pager = delta
+hooksPath = ~/.config/git/hooks
+
+[color]
+ui = true
+
+# =============================================================================
+# BRANCH & REMOTE BEHAVIOR
+# =============================================================================
+
+[pull]
+rebase = false
+
+[push]
+default = current
+
+[branch]
+# autosetuprebase = always
+
+# =============================================================================
+# DIFF & MERGE
+# =============================================================================
+
+[diff]
+noprefix = true
+colorMoved = default
+
+[merge]
+ff = true
+conflictstyle = diff3
+
+# =============================================================================
+# DELTA (pretty diffs)
+# =============================================================================
+
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+pager = less -RF
+navigate = true
+side-by-side = true
+line-numbers = true
+features = unobtrusive-line-numbers decorations
+whitespace-error-style = 22 reverse
+hyperlinks = true
+colorMoved = default
+
+# =============================================================================
+# GIT LFS
+# =============================================================================
+
+[filter "lfs"]
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+required = true
+process = git-lfs filter-process
+
+# =============================================================================
+# JUPYTER NOTEBOOKS (nbdime)
+# =============================================================================
+
+[diff "jupyternotebook"]
+command = git-nbdiffdriver diff

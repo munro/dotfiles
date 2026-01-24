@@ -1,0 +1,12 @@
+{
+  "python.analysis.typeCheckingMode": "basic",
+  "python.pythonPath": ".venv/bin/python",
+  "coc.preferences.formatOnSave": true,
+  "json.format.enable": true,
+  "yaml.format.enable": true,
+  "ruff.useDetectRuffCommand": true,
+  "inlayHint.enable": true,
+  "pyright.inlayHints.variableTypes": true,
+  "pyright.inlayHints.functionReturnTypes": true,
+  "pyright.inlayHints.parameterTypes": true
+}

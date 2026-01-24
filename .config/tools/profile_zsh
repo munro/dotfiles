@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+hyperfine "zsh -i -c 'ls'" --warmup 20 --runs 100
