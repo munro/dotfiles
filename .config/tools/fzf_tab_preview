@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+realpath=$1
+if [[ -f $realpath ]]; then
+    bat --color=always $realpath
+else
+    # lsd -la --color=always --date=relative --blocks=permission,size,date,name $realpath
+    lsd -l --color=always --date=relative --blocks=size,date,name --icon=always $realpath
+fi

@@ -162,27 +162,27 @@ export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
 # DOTFILES GIT - Auto-set GIT_DIR/GIT_WORK_TREE in ~/
 # =============================================================================
 
-function _dotfiles_chpwd() {
-  if [[ "$PWD" == "$HOME" || "$PWD" == "$HOME/.config"* ]]; then
-    _GIT_PREFIX="env GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME"
-  else
-    _GIT_PREFIX=""
-  fi
-  alias git="$_GIT_PREFIX git"
-  alias gp="$_GIT_PREFIX git push"
-  alias gs="$_GIT_PREFIX git status"
-  alias gc="$_GIT_PREFIX git add \"\$(git rev-parse --show-toplevel)\" && git commit -m wip"
-  alias gca="gc"
-  alias gl="$_GIT_PREFIX git k"
-}
+# function _dotfiles_chpwd() {
+#   if [[ "$PWD" == "$HOME" || "$PWD" == "$HOME/.config"* ]]; then
+#     _GIT_PREFIX="env GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME"
+#   else
+#     _GIT_PREFIX=""
+#   fi
+#   alias git="$_GIT_PREFIX git"
+#   alias gp="$_GIT_PREFIX git push"
+#   alias gs="$_GIT_PREFIX git status"
+#   alias gc="$_GIT_PREFIX git add \"\$(git rev-parse --show-toplevel)\" && git commit -m wip"
+#   alias gca="gc"
+#   alias gl="$_GIT_PREFIX git k"
+# }
 
-add-zsh-hook chpwd _dotfiles_chpwd
+# add-zsh-hook chpwd _dotfiles_chpwd
 
-# Wrap vim to unset dotfiles git vars (vim-plug needs clean git env)
-alias vim='env -u GIT_DIR -u GIT_WORK_TREE vim'
+# # Wrap vim to unset dotfiles git vars (vim-plug needs clean git env)
+# alias vim='env -u GIT_DIR -u GIT_WORK_TREE vim'
 
-# Set initial state (in case shell starts in ~/)
-_dotfiles_chpwd
+# # Set initial state (in case shell starts in ~/)
+# _dotfiles_chpwd
 
 # =============================================================================
 # ALIASES - GIT & DOTFILES
@@ -516,7 +516,8 @@ compdef _t_completion t
 
 function rr() {
   # Clear completion cache
-  [[ -f ~/.zcompdump ]] && rm -f ~/.zcompdump
+  rm -f ~/.zcompdump
+  rm -rf ~/.cache/zcompcache
 
   # Exec fresh login shell (cleanest reload - replaces current process)
   exec zsh -l
@@ -527,13 +528,61 @@ function rr() {
 # =============================================================================
 
 # fzf-tab (must be before autosuggestions/syntax-highlighting)
-if [[ -f ~/.zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
-  source ~/.zsh/fzf-tab/fzf-tab.plugin.zsh
+if [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
+  source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
   # fzf-tab configuration
+  zstyle ':completion:*' format '[%d]'
+
   zstyle ':completion:*:descriptions' format '[%d]'
+  
+zstyle ':completion:*:processes' format 'Completing: %d'
+zstyle ':completion:*' select-prompt 'Menu-selection: %p'
+
+  zstyle ':fzf-tab:*' continuous-trigger '/'
+
   zstyle ':completion:*' menu no  # let fzf-tab handle the menu
   zstyle ':fzf-tab:*' switch-group '<' '>'
-  zstyle ':fzf-tab:*' fzf-flags --height=40% --no-preview
+
+
+  # COMPLETES
+  # zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -la --color=always $realpath'
+  # zstyle ':fzf-tab:complete:kill:*' fzf-preview 'ps -p $word -o pid,user,%cpu,%mem,command'
+
+  # zstyle ':fzf-tab:complete:(cd|lsd|ls):path-directories' fzf-preview  'lsd -la --color=always $realpath'
+  zstyle ':fzf-tab:complete:*:*' fzf-preview 'fzf_tab_preview $realpath'
+
+  zstyle ':fzf-tab:complete:kill:*' fzf-preview
+
+  # zstyle ':fzf-tab:complete:lsd:*' fzf-preview 'bat --color=always $realpath'
+
+  #####
+
+  # disable sort when completing `git checkout`
+  zstyle ':completion:*:git-checkout:*' sort false
+  # set descriptions format to enable group support
+  # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+  zstyle ':completion:*:descriptions' format '[%d]'
+  # set list-colors to enable filename colorizing
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+  # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+  zstyle ':completion:*' menu no
+  # preview directory's content with eza when completing cd
+
+  # custom fzf flags
+  # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+  zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+    zstyle ':fzf-tab:*' fzf-flags \
+      --color=fg:1,fg+:2 --bind=tab:accept  --layout=reverse  \
+      --height=40% --history=$HOME/.cache/fzf_tab_history
+  # To make fzf-tab follow FZF_DEFAULT_OPTS.
+  # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+  zstyle ':fzf-tab:*' use-fzf-default-opts yes
+  # switch group using `<` and `>`
+  zstyle ':fzf-tab:*' switch-group '<' '>'
+
+  # zstyle ':fzf-tab:*' fzf-flags --no-sort
+  # zstyle ':fzf-tab:*' fzf-flags 
+  # zstyle ':fzf-tab:complete:-command-:*' fzf-flags --no-sort --tiebreak=length
 fi
 
 # zsh-autosuggestions

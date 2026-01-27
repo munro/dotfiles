@@ -127,6 +127,7 @@ brew "wireguard-tools"
 
 brew "awscli"
 brew "aws-cdk"
+cask "session-manager-plugin"
 brew "s5cmd"
 brew "aiven-client"
 
@@ -147,7 +148,6 @@ brew "terraform-mcp-server"
 # CONTAINERS & VIRTUALIZATION
 # =============================================================================
 
-brew "colima"
 brew "docker"
 brew "docker-buildx"
 brew "docker-credential-helper"

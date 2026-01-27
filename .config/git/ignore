@@ -1,0 +1,13 @@
+.*_history
+.claude
+.cursor
+.cursorignore
+.cursorrules
+.DS_Store
+.env
+.envrc
+.ssh/
+*.local
+*.local.*
+*~
+scratch
