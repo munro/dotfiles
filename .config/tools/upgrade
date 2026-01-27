@@ -1,4 +1,5 @@
 #!/usr/bin/env nu
+# brew autoremove -v && brew cleanup -s --prune=all -v
 
 def main [] {
     cd ~
@@ -17,12 +18,12 @@ def main [] {
         {
             title: "📦 Bundle Sync"
             desc: "Installing from Brewfile, cleaning unlisted, upgrading existing..."
-            cmd: "brew bundle --clean --upgrade"
+            cmd: "brew bundle --clean --upgrade -v"
         }
         {
             title: "⬆️  Greedy Upgrade"
             desc: "Upgrading ALL casks including auto-updating ones..."
-            cmd: "brew upgrade --greedy"
+            cmd: "brew upgrade --greedy -v"
         }
         {
             title: "🗑️  Autoremove"

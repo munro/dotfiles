@@ -50,86 +50,91 @@ brew "pkg-config"
 # PROGRAMMING LANGUAGES & RUNTIMES
 # =============================================================================
 
-brew "python"
-brew "golang"
-brew "rbenv"
+brew "coq"
+brew "deno"
 brew "fnm"
+brew "golang"
 brew "mise"
+brew "python"
+brew "rbenv"
 
 # =============================================================================
 # PYTHON TOOLS
 # =============================================================================
 
-brew "uv"
 brew "pipx"
 brew "ruff"
+brew "uv"
 
 # =============================================================================
 # SHELL & TERMINAL
 # =============================================================================
 
-brew "zsh"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
+brew "bash"
+brew "direnv"
 brew "nushell"
 brew "tmux"
 brew "ttyrec"
-brew "direnv"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
 
 # =============================================================================
 # GIT & VERSION CONTROL
 # =============================================================================
 
+brew "fossil"
 brew "git"
 brew "git-delta"
 brew "git-gui"
-brew "fossil"
 
 # =============================================================================
 # MODERN CLI REPLACEMENTS
 # =============================================================================
 
 brew "bat"
-brew "lsd"
-brew "ripgrep"
-brew "fd"
-brew "fzf"
-brew "duf"
-brew "dust"
-brew "sd"
-brew "htop"
-brew "hyperfine"
 brew "code-minimap"
 brew "difftastic"
+brew "duf"
+brew "dust"
 brew "fastfetch"
+brew "fd"
+brew "fzf"
+brew "htop"
+brew "hyperfine"
+brew "lsd"
+brew "ripgrep"
+brew "sd"
 
 # =============================================================================
 # NETWORKING & SSH
 # =============================================================================
 
-brew "curl"
-brew "wget"
+brew "aircrack-ng"
 brew "aria2"
-brew "openssh"
 brew "autossh"
-brew "mosh"
-brew "sshuttle"
-brew "netcat"
-brew "nmap"
-brew "telnet"
+brew "curl"
+brew "inetutils"
 brew "iperf"
 brew "iperf3"
+brew "mosh"
+brew "netcat"
+brew "nmap"
+brew "openssh"
+brew "telnet"
+brew "wget"
 brew "wireguard-tools"
 
 # =============================================================================
 # AWS & CLOUD
 # =============================================================================
 
-brew "awscli"
-brew "aws-cdk"
-cask "session-manager-plugin"
-brew "s5cmd"
 brew "aiven-client"
+brew "aws-cdk"
+brew "awscli"
+brew "s5cmd"
+cask "gcloud-cli"
+cask "session-manager-plugin"
 
 # =============================================================================
 # INFRASTRUCTURE AS CODE
@@ -137,12 +142,12 @@ brew "aiven-client"
 
 brew "hashicorp/tap/packer"
 brew "opentofu"
-brew "terragrunt"
-brew "terraform-docs"
-brew "terraform-lsp"
 brew "terraform-cleaner"
+brew "terraform-docs"
 brew "terraform-iam-policy-validator"
+brew "terraform-lsp"
 brew "terraform-mcp-server"
+brew "terragrunt"
 
 # =============================================================================
 # CONTAINERS & VIRTUALIZATION
@@ -158,28 +163,38 @@ brew "docker-credential-helper"
 
 brew "libpq"
 system "brew", "link", "--force", "libpq"
-brew "postgresql@16"
 brew "mysql-client"
+brew "postgresql@16"
 brew "redis"
 brew "sqlite"
+
+# =============================================================================
+# BACKUP & ARCHIVING
+# =============================================================================
+
+brew "borgbackup"
 
 # =============================================================================
 # MEDIA & GRAPHICS
 # =============================================================================
 
-brew "ffmpeg"
-brew "imagemagick"
 brew "exiftool"
-brew "mkvtoolnix"
-brew "yt-dlp"
-brew "graphviz"
+brew "ffmpeg"
 brew "fontforge"
+brew "graphviz"
+brew "imagemagick"
+brew "media-info"
+brew "mkvtoolnix"
+brew "mplayer"
+brew "yt-dlp"
 
 # =============================================================================
 # MISC CLI TOOLS
 # =============================================================================
 
+brew "backlog-md"
 brew "biome"
+brew "geckodriver"
 brew "gnupg"
 brew "go-task"
 brew "mkcert"
@@ -188,43 +203,46 @@ brew "pv"
 brew "pwgen"
 brew "rsync"
 brew "shfmt"
+brew "stockfish"
+brew "verilator"
 brew "vim"
 brew "watch"
-brew "verilator"
-brew "backlog-md"
-brew "geckodriver"
 
 # =============================================================================
 # CASKS - PRODUCTIVITY
 # =============================================================================
 
-cask "raycast"
+cask "anki"
 cask "clocker"
-cask "obsidian"
 cask "libreoffice"
+cask "obsidian"
+cask "raycast"
 
 # =============================================================================
 # CASKS - DEVELOPMENT
 # =============================================================================
 
+cask "base"
+cask "claude-code"
 cask "ghostty"
 cask "orbstack"
 cask "postico"
-cask "base"
+cask "rstudio"
+
+# =============================================================================
+# CASKS - BROWSERS
+# =============================================================================
+
+cask "google-chrome"
 
 # =============================================================================
 # CASKS - MEDIA
 # =============================================================================
 
-cask "vlc"
 cask "obs"
-
-# =============================================================================
-# CASKS - MEDIA (CLI)
-# =============================================================================
-
-brew "mplayer"
-brew "media-info"
+cask "qbittorrent"
+cask "streamlabs"
+cask "vlc"
 
 # =============================================================================
 # CASKS - COMMUNICATION
@@ -233,16 +251,28 @@ brew "media-info"
 cask "whatsapp"
 
 # =============================================================================
+# CASKS - GIS & MAPPING
+# =============================================================================
+
+cask "qgis"
+
+# =============================================================================
 # CASKS - SYSTEM UTILITIES
 # =============================================================================
 
 cask "disk-inventory-x"
-cask "GrandPerspective"
+cask "grandperspective"
 cask "jiggler"
 cask "lulu"
 cask "taskexplorer"
 cask "wireshark-app"
 cask "xquartz"
+
+# =============================================================================
+# CASKS - SECURITY
+# =============================================================================
+
+cask "gpg-suite"
 
 # =============================================================================
 # CASKS - FONTS

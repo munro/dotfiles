@@ -54,11 +54,17 @@ nnoremap <Esc><Esc> :nohlsearch<CR>
 " -----------------------------------------------------------------------------
 " Files & Directories
 " -----------------------------------------------------------------------------
-set dir=$HOME/.config/vim/tmp
-set viminfofile=$HOME/.config/vim/viminfo
+if !isdirectory($HOME . "/.cache/vim/tmp")
+  call mkdir($HOME . "/.cache/vim/tmp", "p")
+endif
+if !isdirectory($HOME . "/.cache/vim/undo")
+  call mkdir($HOME . "/.cache/vim/undo", "p")
+endif
+set dir=$HOME/.cache/vim/tmp
+set viminfofile=$HOME/.cache/vim/viminfo
 set viminfo='100,<1000,s100,h  " Save marks, registers (up to 1000 lines), no hlsearch
 set undofile                    " Persistent undo across sessions
-set undodir=$HOME/.config/vim/undo
+set undodir=$HOME/.cache/vim/undo
 set title titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 set wildignore+=*.o,*.obj,.git,*.min.js,*.png,*.class,*.jpg,*.jar,*.pack
 set wildignore+=*.idx,*.gif,*.apk,*.dmg,*.exe,*.dll,*.bak,*.orig,*.swp

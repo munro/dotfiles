@@ -47,11 +47,12 @@ default = current
 
 [diff]
 noprefix = true
-colorMoved = default
+# colorMoved = default
 
 [merge]
 ff = true
-conflictstyle = diff3
+# conflictstyle = diff3
+
 
 # =============================================================================
 # DELTA (pretty diffs)
@@ -61,8 +62,9 @@ conflictstyle = diff3
 diffFilter = delta --color-only
 
 [delta]
-pager = less -RF
-navigate = true
+# pager = less -RF
+navigate = true # use n and N to move between diff sections
+# light = true # set to true if you're in a terminal w/ a light background color
 side-by-side = true
 line-numbers = true
 features = unobtrusive-line-numbers decorations
@@ -83,6 +85,12 @@ process = git-lfs filter-process
 # =============================================================================
 # JUPYTER NOTEBOOKS (nbdime)
 # =============================================================================
+
+[merge]
+conflictstyle = diff3
+
+[diff]
+colorMoved = default
 
 [diff "jupyternotebook"]
 command = git-nbdiffdriver diff

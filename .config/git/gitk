@@ -28,7 +28,7 @@ set linehoverbgcolor #ffff80
 set linehoverfgcolor black
 set linehoveroutlinecolor black
 set linkfgcolor blue
-set mainfont {{Lucida Grande} 9}
+set mainfont {{Lucida Grande} 16}
 set mainheadcirclecolor yellow
 set markbgcolor #e0e0ff
 set maxgraphpct 50
@@ -47,9 +47,7 @@ set tabstop 8
 set tagbgcolor yellow
 set tagfgcolor black
 set tagoutlinecolor black
-set textfont {Monaco 9}
-set theme aqua
-set themeloader {}
+set textfont {Monaco 16}
 set uicolor grey85
 set uifgcolor black
 set uifgdisabledcolor #999
@@ -59,12 +57,12 @@ set web_browser open
 set workingfilescirclecolor red
 set wrapcomment none
 set wrapdefault none
-set geometry(main) 3440x1306+0+25
+set geometry(main) 3440x1297+0+31
 set geometry(state) zoomed
 set geometry(topwidth) 3440
-set geometry(topheight) 366
-set geometry(pwsash0) "791 1"
-set geometry(pwsash1) "1190 1"
-set geometry(botwidth) 988
-set geometry(botheight) 935
+set geometry(topheight) 519
+set geometry(pwsash0) "785 1"
+set geometry(pwsash1) "1322 1"
+set geometry(botwidth) 1106
+set geometry(botheight) 773
 set permviews {}

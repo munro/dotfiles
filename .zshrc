@@ -201,10 +201,22 @@ export GREP_COLOR='1;32'
 export GREP_COLORS="mt=$GREP_COLOR"
 export AWS_DEFAULT_OUTPUT="table"
 
+# Pager configuration
+export PAGER=less
+export LESS=-R
+
 # =============================================================================
 # KEY BINDINGS
 # Multiple bindings for same action = different terminals send different escape codes
 # =============================================================================
+
+# Terminal application mode (makes terminfo values work)
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+  zle-line-init() { echoti smkx }
+  zle-line-finish() { echoti rmkx }
+  zle -N zle-line-init
+  zle -N zle-line-finish
+fi
 
 bindkey -e  # Emacs mode (Ctrl+A/E for start/end of line, etc.)
 
@@ -224,6 +236,13 @@ bindkey "\e[F" end-of-line          # xterm normal mode
 # History navigation
 bindkey "\e[5~" beginning-of-history  # Page Up
 bindkey "\e[6~" end-of-history        # Page Down
+
+# # Up/Down with prefix search (type "git" then up-arrow to find git commands)
+# autoload -U up-line-or-beginning-search down-line-or-beginning-search
+# zle -N up-line-or-beginning-search
+# zle -N down-line-or-beginning-search
+# bindkey '^[[A' up-line-or-beginning-search
+# bindkey '^[[B' down-line-or-beginning-search
 
 # Insert/Delete
 bindkey "\e[2~" quoted-insert  # Insert key
@@ -247,6 +266,11 @@ bindkey "^[f" vi-forward-blank-word       # Alt+F (Mac Terminal)
 
 # Menu completion
 bindkey "\e[Z" reverse-menu-complete  # Shift+Tab
+
+# # Edit command in $EDITOR with Ctrl-x Ctrl-e
+# autoload -U edit-command-line
+# zle -N edit-command-line
+# bindkey '^x^e' edit-command-line
 
 # Disable F10 (some terminals send this accidentally)
 bindkey -s '\e[21~' ''
@@ -446,7 +470,7 @@ zstyle ':completion:*' squeeze-slashes true  # Treat // as / in path completion
 
 # Completion matching - tried in order:
 # 1. Case-insensitive prefix (abc → Abc)
-# 2. + partial at delimiters (f-b → foo-bar)  
+# 2. + partial at delimiters (f-b → foo-bar)
 # 3. + substring anywhere (wor → troveo_workers)
 zstyle ':completion:*' matcher-list \
   'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
@@ -534,7 +558,7 @@ if [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
   zstyle ':completion:*' format '[%d]'
 
   zstyle ':completion:*:descriptions' format '[%d]'
-  
+
 zstyle ':completion:*:processes' format 'Completing: %d'
 zstyle ':completion:*' select-prompt 'Menu-selection: %p'
 
@@ -581,7 +605,7 @@ zstyle ':completion:*' select-prompt 'Menu-selection: %p'
   zstyle ':fzf-tab:*' switch-group '<' '>'
 
   # zstyle ':fzf-tab:*' fzf-flags --no-sort
-  # zstyle ':fzf-tab:*' fzf-flags 
+  # zstyle ':fzf-tab:*' fzf-flags
   # zstyle ':fzf-tab:complete:-command-:*' fzf-flags --no-sort --tiebreak=length
 fi
 
