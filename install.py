@@ -164,7 +164,9 @@ def apply_dir(*, file: Path, dry_run: bool = True):
     # Check we can copy correctly
     for inner_home_file in home_file.rglob("**/*"):
         if inner_home_file.is_symlink():
-            raise NotImplementedError("TODO make sure copying with symlinks works")
+            raise NotImplementedError(
+                f"TODO make sure copying with symlinks works: {inner_home_file=} for {home_file=}"
+            )
         if not (inner_home_file.is_dir() or inner_home_file.is_file()):
             raise NotImplementedError(
                 f"TODO {inner_home_file=} [{inner_home_file.stat().st_mode=}]"

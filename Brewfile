@@ -62,8 +62,8 @@ brew "rbenv"
 # PYTHON TOOLS
 # =============================================================================
 
-brew "ruff"
 brew "uv"
+brew "ruff"
 
 # =============================================================================
 # SHELL & TERMINAL
@@ -81,10 +81,10 @@ brew "zsh-syntax-highlighting"
 # GIT & VERSION CONTROL
 # =============================================================================
 
-brew "fossil"
 brew "git"
 brew "git-delta"
 brew "git-gui"
+brew "fossil"
 
 # =============================================================================
 # MODERN CLI REPLACEMENTS
@@ -112,7 +112,7 @@ brew "aircrack-ng"
 brew "aria2"
 brew "autossh"
 brew "curl"
-brew "inetutils"
+brew "inetutils" # conflicts with telnet
 brew "iperf"
 brew "iperf3"
 brew "mosh"
@@ -121,6 +121,8 @@ brew "nmap"
 brew "openssh"
 brew "wget"
 brew "wireguard-tools"
+brew "mtr"
+brew "httping"
 
 # =============================================================================
 # AWS & CLOUD
@@ -160,8 +162,8 @@ brew "docker-credential-helper"
 
 brew "libpq"
 system "brew", "link", "--force", "libpq"
-brew "mysql-client"
 brew "postgresql@16"
+brew "mysql-client"
 brew "redis"
 brew "sqlite"
 
@@ -189,6 +191,7 @@ brew "yt-dlp"
 # MISC CLI TOOLS
 # =============================================================================
 
+
 brew "biome"
 brew "geckodriver"
 brew "gnupg"
@@ -203,6 +206,7 @@ brew "stockfish"
 brew "verilator"
 brew "vim"
 brew "watch"
+brew "backlog-md"
 
 # =============================================================================
 # CASKS - PRODUCTIVITY
@@ -235,10 +239,13 @@ cask "google-chrome"
 # CASKS - MEDIA
 # =============================================================================
 
+
 cask "obs"
 cask "qbittorrent"
 cask "streamlabs"
 cask "vlc"
+brew "mplayer"
+brew "media-info"
 
 # =============================================================================
 # CASKS - COMMUNICATION
@@ -257,7 +264,7 @@ cask "qgis"
 # =============================================================================
 
 cask "disk-inventory-x"
-cask "grandperspective"
+cask "GrandPerspective"
 cask "jiggler"
 cask "lulu"
 cask "taskexplorer"

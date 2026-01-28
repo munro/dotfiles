@@ -513,6 +513,7 @@ function rr() {
   # Clear completion cache
   rm -rf ~/.zcompdump*
   rm -rf ~/.cache/zcompcache
+  rm -rf ~/.cache/zsh
 
   # Exec fresh login shell (cleanest reload - replaces current process)
   exec zsh -l
@@ -587,5 +588,10 @@ fi
 
 # zsh-syntax-highlighting (must be last)
 if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor line regexp)
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  ZSH_HIGHLIGHT_REGEXP+=('^ *rm ' fg=red,bold)
+  ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
+  ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,bold,underline'
+  ZSH_HIGHLIGHT_STYLES[globbing]='fg=yellow'
 fi

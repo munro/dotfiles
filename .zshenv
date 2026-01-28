@@ -1,52 +1,4 @@
 # =============================================================================
-# PATH SETUP
-# =============================================================================
-
-typeset -U path  # auto-dedupe
-
-# =============================================================================
-# HOMEBREW
-# =============================================================================
-
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_PREFIX="/opt/homebrew"
-export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-export HOMEBREW_REPOSITORY="/opt/homebrew"
-export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
-export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-
-# =============================================================================
-# PATH
-# =============================================================================
-
-path=(
-  # User tools
-  "$HOME/.config/tools.local"
-  "$HOME/.config/tools"
-  "$HOME/.cargo/bin"
-  "$HOME/.rbenv/bin"
-  "$HOME/.juliaup/bin"
-  "$HOME/.pyenv/bin"
-  # Homebrew
-  "/opt/homebrew/bin"
-  "/opt/homebrew/sbin"
-  "/opt/homebrew/opt/mysql-client/bin"
-  "/opt/homebrew/opt/libpq/bin"
-  # System
-  "/Applications/SWI-Prolog.app/Contents/MacOS"
-  "/usr/local/sbin"
-  $path
-)
-
-# Low priority (append)
-path+=(
-  "/Library/TeX/texbin"
-)
-
-# Remove non-existent PATH entries
-path=( ${^path}(N) )
-
-# =============================================================================
 # ENVIRONMENT VARIABLES
 # =============================================================================
 
@@ -71,6 +23,51 @@ export UV_COMPILE_BYTECODE=1
 export OVERCOMMIT_DISABLE=1
 export CDK_DISABLE_CLI_TELEMETRY=true
 
+# -----------------------------------------------------------------------------
+# HOMEBREW
+# -----------------------------------------------------------------------------
+
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export HOMEBREW_REPOSITORY="/opt/homebrew"
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+
+# =============================================================================
+# PATH SETUP
+# =============================================================================
+
+typeset -U path  # auto-dedupe
+
+path=(
+  # User tools
+  "$HOME/.config/tools.local"
+  "$HOME/.config/tools"
+  "$HOME/.cargo/bin"
+  "$HOME/.rbenv/bin"
+  "$HOME/.juliaup/bin"
+  "$HOME/.pyenv/bin"
+  "$HOME/.lmstudio/bin"
+  # Homebrew
+  "/opt/homebrew/bin"
+  "/opt/homebrew/sbin"
+  "/opt/homebrew/opt/mysql-client/bin"
+  "/opt/homebrew/opt/libpq/bin"
+  # System
+  "/Applications/SWI-Prolog.app/Contents/MacOS"
+  "/usr/local/sbin"
+  $path
+)
+
+# Low priority (append)
+path+=(
+  "/Library/TeX/texbin"
+)
+
+# Remove non-existent PATH entries
+path=( ${^path}(N) )
+
 # =============================================================================
 # LOCAL SETTINGS
 # =============================================================================
@@ -84,10 +81,10 @@ fi
 # =============================================================================
 
 export MISE_SHELL=zsh
-path=("$HOME/.local/share/mise/shims" $path)
-
-# Hook on directory change to activate project-specific versions
-_mise_hook_chpwd() {
-  eval "$(mise hook-env -s zsh)" 2>/dev/null
-}
-chpwd_functions+=(_mise_hook_chpwd)
+if [[ -f "$HOME/.cache/zsh/mise-activate.zsh" && -n "$HOME/.cache/zsh/mise-activate.zsh"(#qN.mh-24) ]]; then
+  source "$HOME/.cache/zsh/mise-activate.zsh"
+else
+  mkdir -p "$HOME/.cache/zsh"
+  mise activate zsh > "$HOME/.cache/zsh/mise-activate.zsh"
+  source "$HOME/.cache/zsh/mise-activate.zsh"
+fi
