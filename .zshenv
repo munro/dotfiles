@@ -75,8 +75,8 @@ export CDK_DISABLE_CLI_TELEMETRY=true
 # LOCAL SETTINGS
 # =============================================================================
 
-if [[ -f ~/.zshrc.local ]]; then
-  source ~/.zshrc.local
+if [[ -f ~/.zshenv.local ]]; then
+  source ~/.zshenv.local
 fi
 
 # =============================================================================

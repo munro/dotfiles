@@ -48,6 +48,8 @@ set tagbgcolor yellow
 set tagfgcolor black
 set tagoutlinecolor black
 set textfont {Monaco 16}
+set theme aqua
+set themeloader {}
 set uicolor grey85
 set uifgcolor black
 set uifgdisabledcolor #999

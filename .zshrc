@@ -159,32 +159,6 @@ done
 export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
 
 # =============================================================================
-# DOTFILES GIT - Auto-set GIT_DIR/GIT_WORK_TREE in ~/
-# =============================================================================
-
-# function _dotfiles_chpwd() {
-#   if [[ "$PWD" == "$HOME" || "$PWD" == "$HOME/.config"* ]]; then
-#     _GIT_PREFIX="env GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME"
-#   else
-#     _GIT_PREFIX=""
-#   fi
-#   alias git="$_GIT_PREFIX git"
-#   alias gp="$_GIT_PREFIX git push"
-#   alias gs="$_GIT_PREFIX git status"
-#   alias gc="$_GIT_PREFIX git add \"\$(git rev-parse --show-toplevel)\" && git commit -m wip"
-#   alias gca="gc"
-#   alias gl="$_GIT_PREFIX git k"
-# }
-
-# add-zsh-hook chpwd _dotfiles_chpwd
-
-# # Wrap vim to unset dotfiles git vars (vim-plug needs clean git env)
-# alias vim='env -u GIT_DIR -u GIT_WORK_TREE vim'
-
-# # Set initial state (in case shell starts in ~/)
-# _dotfiles_chpwd
-
-# =============================================================================
 # ALIASES - GIT & DOTFILES
 # =============================================================================
 
@@ -492,9 +466,6 @@ source "$HOME/.config/zsh/theme/munro.zsh-theme"
 if [[ -f ~/.localrc ]]; then
   source ~/.localrc
 fi
-if [[ -f ~/.localrc.local ]]; then
-  source ~/.localrc.local
-fi
 
 # =============================================================================
 # COMPINIT (must be after all fpath modifications)
@@ -540,7 +511,7 @@ compdef _t_completion t
 
 function rr() {
   # Clear completion cache
-  rm -f ~/.zcompdump
+  rm -rf ~/.zcompdump*
   rm -rf ~/.cache/zcompcache
 
   # Exec fresh login shell (cleanest reload - replaces current process)
@@ -559,8 +530,8 @@ if [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
 
   zstyle ':completion:*:descriptions' format '[%d]'
 
-zstyle ':completion:*:processes' format 'Completing: %d'
-zstyle ':completion:*' select-prompt 'Menu-selection: %p'
+  zstyle ':completion:*:processes' format 'Completing: %d'
+  zstyle ':completion:*' select-prompt 'Menu-selection: %p'
 
   zstyle ':fzf-tab:*' continuous-trigger '/'
 
@@ -595,9 +566,9 @@ zstyle ':completion:*' select-prompt 'Menu-selection: %p'
   # custom fzf flags
   # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
   zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
-    zstyle ':fzf-tab:*' fzf-flags \
-      --color=fg:1,fg+:2 --bind=tab:accept  --layout=reverse  \
-      --height=40% --history=$HOME/.cache/fzf_tab_history
+  zstyle ':fzf-tab:*' fzf-flags \
+    --color=fg:1,fg+:2 --bind=tab:accept  --layout=reverse  \
+    --height=40% --history=$HOME/.cache/fzf_tab_history
   # To make fzf-tab follow FZF_DEFAULT_OPTS.
   # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
   zstyle ':fzf-tab:*' use-fzf-default-opts yes
