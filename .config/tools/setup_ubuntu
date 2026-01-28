@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# TODO duf
+# TODO dust
+# TODO sd
+# TODO aria2
+# TODO zsh-autosuggestions
+# TODO zsh-syntax-highlighting
+# TODO code-minimap
+
+apt_packages=(
+  # Build tooling
+  autoconf           # autoconf macros
+  automake           # automake
+  build-essential    # gcc/g++/make toolchain
+  cmake              # cross-platform build system
+  pkg-config         # compile/link flags discovery
+
+  # Base essentials
+  ca-certificates    # TLS root certs
+  curl               # HTTP client
+  wget               # HTTP client
+  git                # version control
+  gnupg              # GPG
+  jq                 # JSON processor
+  openssh-client     # ssh/scp/sftp
+  p7zip-full         # 7z
+  unzip              # unzip
+  xz-utils           # xz compression
+
+  # Shell workflow
+  zsh                # shell
+  tmux               # terminal multiplexer
+  fzf                # fuzzy finder
+
+  # Modern CLI replacements / utilities
+  bat                # cat replacement (binary may be batcat)
+  fd-find            # fd replacement (binary is fdfind)
+  ripgrep            # fast grep
+  lsd                # ls replacement
+  git-delta          # diff pager
+  htop               # process viewer
+  hyperfine          # benchmarking
+  procps             # provides watch/ps/top/etc
+  pv                 # pipe progress viewer
+  pwgen              # password generator
+  rsync              # sync/copy tool
+  shfmt              # shell formatter
+  vim                # editor
+
+  # Networking
+  mosh               # better ssh sessions
+  netcat-openbsd     # nc
+  nmap               # network scanner
+
+  # Task runner
+  task               # go-task binary (command: task)
+
+  # Database (local tooling)
+  sqlite3            # sqlite CLI
+)
+
+sudo apt update
+sudo apt install "${apt_packages[@]}"
+
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install difftastic # requires cargo (rustup)
+cargo install mise       # requires cargo (rustup)

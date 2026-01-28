@@ -62,7 +62,6 @@ brew "rbenv"
 # PYTHON TOOLS
 # =============================================================================
 
-brew "pipx"
 brew "ruff"
 brew "uv"
 
@@ -71,7 +70,6 @@ brew "uv"
 # =============================================================================
 
 brew "bash"
-brew "direnv"
 brew "nushell"
 brew "tmux"
 brew "ttyrec"
@@ -121,7 +119,6 @@ brew "mosh"
 brew "netcat"
 brew "nmap"
 brew "openssh"
-brew "telnet"
 brew "wget"
 brew "wireguard-tools"
 
@@ -192,7 +189,6 @@ brew "yt-dlp"
 # MISC CLI TOOLS
 # =============================================================================
 
-brew "backlog-md"
 brew "biome"
 brew "geckodriver"
 brew "gnupg"

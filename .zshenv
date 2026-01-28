@@ -88,6 +88,6 @@ path=("$HOME/.local/share/mise/shims" $path)
 
 # Hook on directory change to activate project-specific versions
 _mise_hook_chpwd() {
-  eval "$(/opt/homebrew/bin/mise hook-env -s zsh)" 2>/dev/null
+  eval "$(mise hook-env -s zsh)" 2>/dev/null
 }
 chpwd_functions+=(_mise_hook_chpwd)

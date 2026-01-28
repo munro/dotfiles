@@ -6,8 +6,4 @@
 .DS_Store
 .env
 .envrc
-.ssh/
-*.local
-*.local.*
-*~
 scratch

@@ -178,7 +178,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 
 " Utilities
-Plug 'vim-scripts/restore_view.vim'     " Restore cursor, folds, scroll
 Plug 'tpope/vim-commentary'             " gcc to comment
 Plug 'tpope/vim-surround'               " cs'" to change quotes
 Plug 'tpope/vim-repeat'                 " . works with plugins
