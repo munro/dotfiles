@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Cleaning .pyc files and __pycache__ directories..."
+
+# Delete all .pyc files (excluding .venv)
+fd --no-ignore --exclude '.venv' --type f '\.pyc$' --exec rm -v {}
+
+# Delete all __pycache__ directories (excluding .venv)
+fd --no-ignore --exclude '.venv' --type d '^__pycache__$' --exec rm -rv {}
+
+echo "Done!"

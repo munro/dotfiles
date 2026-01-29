@@ -19,6 +19,7 @@ export GIT_COMMITTER_EMAIL="500774+munro@users.noreply.github.com"
 # -----------------------------------------------------------------------------
 
 export EDITOR="vim"  # in zshenv so GUI apps and scripts know preferred editor
+export PYTHONPYCACHEPREFIX="$HOME/.cache/pycache"
 export UV_COMPILE_BYTECODE=1
 export OVERCOMMIT_DISABLE=1
 export CDK_DISABLE_CLI_TELEMETRY=true
