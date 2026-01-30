@@ -12,6 +12,9 @@ email = 500774+munro@users.noreply.github.com
 
 [alias]
 k = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%aN%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)%Creset' --abbrev-commit --date=relative
+s = status
+l = log
+r = reset
 
 # =============================================================================
 # CORE SETTINGS

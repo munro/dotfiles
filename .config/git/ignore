@@ -1,3 +1,4 @@
+__pycache__/
 .*_history
 .claude
 .cursor
@@ -6,4 +7,12 @@
 .DS_Store
 .env
 .envrc
+[._]*.un~
+*.nosync
+*.pyc
+*.swo
+*.swp
+*.tfstate*
+*~
+*tfplan*
 scratch

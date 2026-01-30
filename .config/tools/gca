@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Get git root directory
+git_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+    echo "Error: Not in a git repository" >&2
+    exit 1
+}
+
+cd "$git_root"
+git add -A
+git commit -m "wip"

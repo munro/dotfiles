@@ -49,6 +49,7 @@ def main(argv: list[str]) -> None:
 
     apply_dotfiles(root_files, dry_run=dry_run)
     apply_dotfiles(config_files, dry_run=dry_run)
+    apply_overwrite_files(dry_run=dry_run)
     if CHANGES == 0:
         print(f"\n{GREEN}{BOLD}✅ NO CHANGES TO APPLY.{RESET}")
     elif dry_run:
@@ -182,6 +183,32 @@ def apply_dir(*, file: Path, dry_run: bool = True):
 
 
 # =============================================================================
+# OVERWRITE FILE APPLICATION
+# =============================================================================
+
+
+def apply_overwrite_files(dry_run: bool = True):
+    global CHANGES
+
+    for overwrite_file in sorted(DOTFILES.glob("**/*.overwrite")):
+        relative = overwrite_file.relative_to(DOTFILES)
+        target_relative = Path(str(relative).removesuffix(".overwrite"))
+        target_file = HOME / target_relative
+
+        if target_file.exists() and target_file.read_bytes() == overwrite_file.read_bytes():
+            print_overwrite_perfect(overwrite_file=overwrite_file, target_file=target_file)
+            continue
+
+        if not dry_run:
+            target_file.parent.mkdir(parents=True, exist_ok=True)
+            if target_file.exists():
+                target_file.unlink()
+            shutil.copy2(overwrite_file, target_file)
+        print_overwrite_copied(overwrite_file=overwrite_file, target_file=target_file)
+        CHANGES += 1
+
+
+# =============================================================================
 # PATH HELPERS
 # =============================================================================
 
@@ -268,6 +295,25 @@ def print_copied_and_linked(*, file: Path, home_file: Path) -> None:
         f"{GREEN}{BOLD}(COPIED AND LINKED)",
         icon="⚠️",
         home_file=home_file,
+    )
+
+
+def print_overwrite_perfect(*, overwrite_file: Path, target_file: Path) -> None:
+    print_notice(
+        f"{DIM}<-",
+        dimmed_file(overwrite_file),
+        icon="⭐",
+        home_file=target_file,
+    )
+
+
+def print_overwrite_copied(*, overwrite_file: Path, target_file: Path) -> None:
+    print_notice(
+        f"{CYAN}<-",
+        dimmed_file(overwrite_file),
+        f"{CYAN}{BOLD}(OVERWRITE COPIED)",
+        icon="📋",
+        home_file=target_file,
     )
 
 

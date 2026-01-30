@@ -163,9 +163,21 @@ export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
 # =============================================================================
 
 alias -- -='cd -'
+alias g='git'
+alias gl='git log'
 alias gp='git push'
+alias gr='git reset'
+alias grs='git reset --soft'
 alias gs='git status'
 alias gc='git add "$(git rev-parse --show-toplevel)" && git commit -m wip'
+
+# gitk alias - use real gitk if available, otherwise git k
+if (( $+commands[gitk] )); then
+  alias gk='gitk'
+else
+  alias gk='git k'
+  alias gitk='git k'
+fi
 
 # =============================================================================
 # ENVIRONMENT VARIABLES (interactive-only)
