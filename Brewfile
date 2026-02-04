@@ -111,18 +111,19 @@ brew "sd"
 brew "aircrack-ng"
 brew "aria2"
 brew "autossh"
+brew "cloudflared"
 brew "curl"
+brew "httping"
 brew "inetutils" # conflicts with telnet
 brew "iperf"
 brew "iperf3"
 brew "mosh"
+brew "mtr"
 brew "netcat"
 brew "nmap"
 brew "openssh"
 brew "wget"
 brew "wireguard-tools"
-brew "mtr"
-brew "httping"
 
 # =============================================================================
 # AWS & CLOUD
