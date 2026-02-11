@@ -1,3 +1,5 @@
+*.local.json
+*.local.toml
 *.nosync
 *.pyc
 *.swo
@@ -13,7 +15,9 @@
 .cursorrules
 .env
 .envrc
+.vscode
 [._]*.un~
 __pycache__/
+claude
 gitk
 scratch

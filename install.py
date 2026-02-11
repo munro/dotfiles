@@ -21,8 +21,9 @@ CURRENT_FILE = pathlib.Path(__file__)
 DOTFILES = pathlib.Path(__file__).parent
 HOME = pathlib.Path.home()
 DONT_COPY_FILES = [
-    DOTFILES / "README.md",
     DOTFILES / ".gitignore",
+    DOTFILES / "AGENTS.md",
+    DOTFILES / "README.md",
     DOTFILES / "setup.sh",
     CURRENT_FILE,
 ]
@@ -199,8 +200,13 @@ def apply_overwrite_files(dry_run: bool = True):
         target_relative = Path(str(relative).removesuffix(".overwrite"))
         target_file = HOME / target_relative
 
-        if target_file.exists() and target_file.read_bytes() == overwrite_file.read_bytes():
-            print_overwrite_perfect(overwrite_file=overwrite_file, target_file=target_file)
+        if (
+            target_file.exists()
+            and target_file.read_bytes() == overwrite_file.read_bytes()
+        ):
+            print_overwrite_perfect(
+                overwrite_file=overwrite_file, target_file=target_file
+            )
             continue
 
         if not dry_run:

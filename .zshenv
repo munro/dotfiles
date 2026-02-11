@@ -42,9 +42,12 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 typeset -U path  # auto-dedupe
 
 path=(
+  # mise shims
+  "$HOME/.local/share/mise/shims"
   # User tools
   "$HOME/.config/tools.local"
   "$HOME/.config/tools"
+  "$HOME/.local/bin"
   "$HOME/.cargo/bin"
   "$HOME/.rbenv/bin"
   "$HOME/.juliaup/bin"
@@ -82,10 +85,11 @@ fi
 # =============================================================================
 
 export MISE_SHELL=zsh
-if [[ -f "$HOME/.cache/zsh/mise-activate.zsh" && -n "$HOME/.cache/zsh/mise-activate.zsh"(#qN.mh-24) ]]; then
-  source "$HOME/.cache/zsh/mise-activate.zsh"
-else
-  mkdir -p "$HOME/.cache/zsh"
-  mise activate zsh > "$HOME/.cache/zsh/mise-activate.zsh"
-  source "$HOME/.cache/zsh/mise-activate.zsh"
-fi
+eval "$(mise activate zsh)"
+#if [[ -f "$HOME/.cache/zsh/mise-activate.zsh" && -n "$HOME/.cache/zsh/mise-activate.zsh"(#qN.mh-24) ]]; then
+#  source "$HOME/.cache/zsh/mise-activate.zsh"
+#else
+#  mkdir -p "$HOME/.cache/zsh"
+#  mise activate zsh > "$HOME/.cache/zsh/mise-activate.zsh"
+#  source "$HOME/.cache/zsh/mise-activate.zsh"
+#fi
