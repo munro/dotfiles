@@ -42,9 +42,29 @@ function git_prompt_info() {
     echo "${PS1_COLOR}${ref}${dirty}%f"
 }
 
+# Dotfiles sync status (reads ~/.local/state/dotfiles-sync written by update.sh)
+function dotfiles_sync_status() {
+    local status_file="$HOME/.local/state/dotfiles-sync"
+    [[ -f "$status_file" ]] || return
+
+    local sync_status=""
+    while IFS='=' read -r key val; do
+        [[ "$key" == "STATUS" ]] && sync_status="$val"
+    done < "$status_file"
+
+    case "$sync_status" in
+        ok|"") ;;
+        dirty)        echo "%B%F{red}[DOTFILES DIRTY] %f%b" ;;
+        unpushed)     echo "%B%F{yellow}[DOTFILES UNPUSHED] %f%b" ;;
+        merge_failed) echo "%B%F{red}[DOTFILES SYNC FAILED] %f%b" ;;
+        fetch_failed) echo "%B%F{red}[DOTFILES FETCH FAILED] %f%b" ;;
+        *)            echo "%B%F{red}[DOTFILES: ${sync_status}] %f%b" ;;
+    esac
+}
+
 # Set the prompts
 PROMPT='${PS1_COLOR}[${PS1_PREFIX}%~]%f '
-RPROMPT='$(git_prompt_info)$(ps1_virtual_env)'
+RPROMPT='$(dotfiles_sync_status)$(git_prompt_info)$(ps1_virtual_env)'
 
 # Terminal title
 case "$TERM" in

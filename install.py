@@ -23,8 +23,10 @@ HOME = pathlib.Path.home()
 DONT_COPY_FILES = [
     DOTFILES / ".gitignore",
     DOTFILES / "AGENTS.md",
+    DOTFILES / "install_update_cron.sh",
     DOTFILES / "README.md",
     DOTFILES / "setup.sh",
+    DOTFILES / "update.sh",
     CURRENT_FILE,
 ]
 
