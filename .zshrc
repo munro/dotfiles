@@ -5,7 +5,8 @@
 typeset -U fpath  # auto-dedupe
 
 fpath=(
-  ~/.bun
+  $HOME/.bun
+  $HOME/.local/share/zsh/completions
   /opt/homebrew/share/zsh/site-functions
   $fpath
 )
