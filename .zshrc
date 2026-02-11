@@ -143,9 +143,9 @@ setopt HIST_VERIFY
 alias neofetch="fastfetch"
 
 # Use $+commands hash lookup (instant) instead of command -v (subprocess)
-(( $+commands[lsd] )) && alias ls="lsd -tr"
+(( $+commands[lsd] )) && alias ls="lsd -tr" || alias ls="ls --color=auto"
 (( $+commands[rg] )) && alias rg="rg --max-columns=1000"
-(( $+commands[bat] )) && alias cat="bat"
+(( $+commands[bat] )) && alias cat="bat" || (( $+commands[batcat] )) && alias cat="batcat"
 (( $+commands[duf] )) && alias df="duf"
 (( $+commands[dust] )) && alias du="dust"
 (( $+commands[erd] )) && alias du-fast="erd -L 3 -l -H -I"
@@ -185,6 +185,7 @@ fi
 
 export GREP_COLOR='1;32'
 export GREP_COLORS="mt=$GREP_COLOR"
+alias grep="grep --color=auto"
 export AWS_DEFAULT_OUTPUT="table"
 
 # Pager configuration

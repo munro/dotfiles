@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# TODO duf
-# TODO dust
-# TODO sd
-# TODO aria2
 # TODO zsh-autosuggestions
 # TODO zsh-syntax-highlighting
 # TODO code-minimap
@@ -38,8 +34,7 @@ apt_packages=(
   bat                # cat replacement (binary may be batcat)
   fd-find            # fd replacement (binary is fdfind)
   ripgrep            # fast grep
-  lsd                # ls replacement
-  git-delta          # diff pager
+  duf                # disk usage (df replacement)
   htop               # process viewer
   hyperfine          # benchmarking
   procps             # provides watch/ps/top/etc
@@ -50,6 +45,7 @@ apt_packages=(
   vim                # editor
 
   # Networking
+  aria2              # download utility (multi-protocol)
   mosh               # better ssh sessions
   netcat-openbsd     # nc
   nmap               # network scanner
@@ -64,6 +60,50 @@ apt_packages=(
 sudo apt update
 sudo apt install "${apt_packages[@]}"
 
-# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install difftastic # requires cargo (rustup)
-cargo install mise       # requires cargo (rustup)
+# ── Rust toolchain ─────────────────────────────────────────────────
+if ! command -v rustup &>/dev/null; then
+  echo "Installing Rust..."
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+  source "$HOME/.cargo/env"
+else
+  echo "Updating Rust toolchain..."
+  rustup default stable
+  rustup update stable
+fi
+
+# ── mise (version manager) ────────────────────────────────────────
+if ! command -v mise &>/dev/null; then
+  echo "Installing mise..."
+  curl https://mise.run | sh
+else
+  echo "mise already installed, updating..."
+  mise self-update -y
+fi
+
+# ── Cargo packages (install or upgrade) ────────────────────────────
+cargo_packages=(
+  # Shell essentials (install first — used immediately)
+  lsd                # ls replacement with icons/colors
+
+  # Modern CLI replacements / utilities
+  du-dust            # du replacement (binary: dust)
+  git-delta          # pager/diff for git (binary: delta)
+  difftastic         # structural/syntax-aware diff (binary: difft)
+  sd                 # sed replacement
+
+  # Git utilities
+  "lucky_commit --no-default-features"  # lucky hash prefixes (no OpenCL on headless)
+
+  # Cargo tooling
+  cargo-update       # `cargo install-update -a` to bulk-update
+
+  # Networking
+  trippy             # TUI traceroute/mtr (binary: trip)
+)
+
+for entry in "${cargo_packages[@]}"; do
+  read -r pkg extra <<< "$entry"
+  echo "Installing/upgrading $pkg..."
+  sudo env CARGO_HOME="$HOME/.cargo" RUSTUP_HOME="$HOME/.rustup" \
+    "$HOME/.cargo/bin/cargo" install $pkg $extra --root /usr/local || true
+done

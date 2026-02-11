@@ -50,6 +50,7 @@ def main(argv: list[str]) -> None:
     apply_dotfiles(root_files, dry_run=dry_run)
     apply_dotfiles(config_files, dry_run=dry_run)
     apply_overwrite_files(dry_run=dry_run)
+    apply_delete_files(dry_run=dry_run)
     if CHANGES == 0:
         print(f"\n{GREEN}{BOLD}✅ NO CHANGES TO APPLY.{RESET}")
     elif dry_run:
@@ -76,6 +77,9 @@ def apply_dotfiles(root_files: set[Path] | list[Path], dry_run: bool = True):
         home_file = HOME / file.relative_to(DOTFILES)
 
         if file in DONT_COPY_FILES:
+            continue
+
+        if file.name.endswith(".delete"):
             continue
 
         if home_file.exists():
@@ -209,6 +213,32 @@ def apply_overwrite_files(dry_run: bool = True):
 
 
 # =============================================================================
+# DELETE FILE APPLICATION
+# =============================================================================
+
+
+def apply_delete_files(dry_run: bool = True):
+    global CHANGES
+
+    for delete_file in sorted(DOTFILES.glob("**/*.delete")):
+        relative = delete_file.relative_to(DOTFILES)
+        target_relative = Path(str(relative).removesuffix(".delete"))
+        target_path = HOME / target_relative
+
+        if not os.path.lexists(target_path):
+            print_delete_already_gone(delete_file=delete_file, target_path=target_path)
+            continue
+
+        if not dry_run:
+            if target_path.is_symlink() or target_path.is_file():
+                target_path.unlink()
+            elif target_path.is_dir():
+                shutil.rmtree(target_path)
+        print_delete_removed(delete_file=delete_file, target_path=target_path)
+        CHANGES += 1
+
+
+# =============================================================================
 # PATH HELPERS
 # =============================================================================
 
@@ -314,6 +344,26 @@ def print_overwrite_copied(*, overwrite_file: Path, target_file: Path) -> None:
         f"{CYAN}{BOLD}(OVERWRITE COPIED)",
         icon="📋",
         home_file=target_file,
+    )
+
+
+def print_delete_already_gone(*, delete_file: Path, target_path: Path) -> None:
+    print_notice(
+        f"{DIM}<-",
+        dimmed_file(delete_file),
+        f"{DIM}(ALREADY GONE)",
+        icon="⭐",
+        home_file=target_path,
+    )
+
+
+def print_delete_removed(*, delete_file: Path, target_path: Path) -> None:
+    print_notice(
+        f"{RED}<-",
+        dimmed_file(delete_file),
+        f"{RED}{BOLD}(DELETED)",
+        icon="🗑️",
+        home_file=target_path,
     )
 
 
