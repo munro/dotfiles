@@ -164,6 +164,7 @@ export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
 
 alias -- -='cd -'
 alias g='git'
+alias gf='git fetch'
 alias gl='git log'
 alias gp='git push'
 alias gr='git reset'
