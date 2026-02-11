@@ -145,7 +145,7 @@ alias neofetch="fastfetch"
 # Use $+commands hash lookup (instant) instead of command -v (subprocess)
 (( $+commands[lsd] )) && alias ls="lsd -tr" || alias ls="ls --color=auto"
 (( $+commands[rg] )) && alias rg="rg --max-columns=1000"
-(( $+commands[bat] )) && alias cat="bat" || (( $+commands[batcat] )) && alias cat="batcat"
+(( $+commands[bat] )) && alias cat="bat" || { (( $+commands[batcat] )) && alias cat="batcat" }
 (( $+commands[duf] )) && alias df="duf"
 (( $+commands[dust] )) && alias du="dust"
 (( $+commands[erd] )) && alias du-fast="erd -L 3 -l -H -I"
