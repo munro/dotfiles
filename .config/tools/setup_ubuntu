@@ -52,7 +52,7 @@ apt_packages=(
 )
 
 sudo apt update
-sudo apt install "${apt_packages[@]}"
+sudo apt install -y "${apt_packages[@]}"
 
 # ── Rust toolchain ─────────────────────────────────────────────────
 if ! command -v rustup &>/dev/null; then
