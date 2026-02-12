@@ -88,7 +88,8 @@ set t_vb=
 " =============================================================================
 
 set background=dark
-if has('termguicolors') && $TERM_PROGRAM != 'Apple_Terminal'
+" Only enable truecolor when the terminal positively advertises support
+if has('termguicolors') && ($COLORTERM == 'truecolor' || $COLORTERM == '24bit' || $TERM_PROGRAM == 'iTerm.app' || $TERM_PROGRAM == 'WezTerm' || $TERM_PROGRAM == 'tmux' || $TERM =~ 'kitty')
   set termguicolors
 endif
 
