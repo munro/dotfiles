@@ -88,6 +88,20 @@ else
   rustup update stable
 fi
 
+# ── fnm (Fast Node Manager via cargo) ────────────────────────────────
+if ! command -v fnm &>/dev/null; then
+  echo "Installing fnm via cargo..."
+  cargo install fnm
+fi
+
+if command -v fnm &>/dev/null; then
+  eval "$(fnm env --shell bash)"
+  fnm install --lts
+  fnm default lts-latest
+  echo 'fnm installed. Add this to your shell config manually if desired:'
+  echo '  eval "$(fnm env --use-on-cd --shell zsh)"'
+fi
+
 # ── mise (version manager) ────────────────────────────────────────
 if ! command -v mise &>/dev/null; then
   echo "Installing mise..."
@@ -125,8 +139,7 @@ cargo_packages=(
 for entry in "${cargo_packages[@]}"; do
   read -r pkg extra <<< "$entry"
   echo "Installing/upgrading $pkg..."
-  sudo env CARGO_HOME="$HOME/.cargo" RUSTUP_HOME="$HOME/.rustup" \
-    "$HOME/.cargo/bin/cargo" install $pkg $extra --root /usr/local || true
+  cargo install $pkg $extra || true
 done
 
 # ── go-task ────────────────────────────────────────────────────────
