@@ -24,6 +24,7 @@ export PYTHONPYCACHEPREFIX="$HOME/.cache/pycache"
 export UV_COMPILE_BYTECODE=1
 export OVERCOMMIT_DISABLE=1
 export CDK_DISABLE_CLI_TELEMETRY=true
+export BUN_INSTALL="$HOME/.bun"
 
 # -----------------------------------------------------------------------------
 # HOMEBREW
@@ -41,6 +42,7 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 # =============================================================================
 
 typeset -U path  # auto-dedupe
+fpath=("$HOME/.bun" $fpath)
 
 path=(
   # Mise shims (fallback for non-interactive shells like Cursor)
@@ -49,6 +51,7 @@ path=(
   "$HOME/.config/tools.local"
   "$HOME/.config/tools"
   "$HOME/.local/bin"
+  "$HOME/.bun/bin"
   "$HOME/.cargo/bin"
   "$HOME/.rbenv/bin"
   "$HOME/.juliaup/bin"

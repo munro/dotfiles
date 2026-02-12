@@ -92,15 +92,14 @@ fi
 if ! command -v fnm &>/dev/null; then
   echo "Installing fnm via cargo..."
   cargo install fnm
+else
+  echo "Upgrading fnm..."
+  cargo install fnm || true
 fi
 
-if command -v fnm &>/dev/null; then
-  eval "$(fnm env --shell bash)"
-  fnm install --lts
-  fnm default lts-latest
-  echo 'fnm installed. Add this to your shell config manually if desired:'
-  echo '  eval "$(fnm env --use-on-cd --shell zsh)"'
-fi
+eval "$(fnm env --shell bash)"
+fnm install --lts
+fnm default lts-latest
 
 # ── mise (version manager) ────────────────────────────────────────
 if ! command -v mise &>/dev/null; then
@@ -142,11 +141,21 @@ for entry in "${cargo_packages[@]}"; do
   cargo install $pkg $extra || true
 done
 
+# ── Bun ───────────────────────────────────────────────────────────
+if ! command -v bun &>/dev/null; then
+  echo "Installing Bun..."
+  curl -fsSL https://bun.com/install | bash
+else
+  echo "Upgrading Bun..."
+  bun upgrade
+fi
+
 # ── go-task ────────────────────────────────────────────────────────
 if ! command -v task &>/dev/null; then
   echo "Installing go-task..."
   sudo sh -c 'curl -1sLf https://dl.cloudsmith.io/public/task/task/setup.deb.sh | bash'
   sudo apt install task
 else
-  echo "go-task already installed"
+  echo "Upgrading go-task..."
+  sudo apt install --only-upgrade task || true
 fi
