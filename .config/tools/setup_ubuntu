@@ -39,7 +39,6 @@ apt_packages=(
   pwgen              # password generator
   rsync              # sync/copy tool
   shfmt              # shell formatter
-  vim                # editor
 
   # Networking
   aria2              # download utility (multi-protocol)
@@ -52,7 +51,14 @@ apt_packages=(
 )
 
 sudo apt update
-sudo apt install -y "${apt_packages[@]}"
+sudo apt install "${apt_packages[@]}"
+
+# ── Vim AppImage (latest vim, required for coc.nvim) ─────────────────
+echo "Installing latest Vim AppImage..."
+curl -sL "$(curl -s https://api.github.com/repos/vim/vim-appimage/releases/latest \
+  | jq -r '.assets[] | select(.name | test("^Vim-.*x86_64\\.AppImage$")) | .browser_download_url')" \
+  -o /usr/local/bin/vim
+chmod +x /usr/local/bin/vim
 
 # ── Rust toolchain ─────────────────────────────────────────────────
 if ! command -v rustup &>/dev/null; then

@@ -60,8 +60,9 @@ path=(
   "/opt/homebrew/opt/mysql-client/bin"
   "/opt/homebrew/opt/libpq/bin"
   # System
-  "/Applications/SWI-Prolog.app/Contents/MacOS"
+  "/usr/local/bin"
   "/usr/local/sbin"
+  "/Applications/SWI-Prolog.app/Contents/MacOS"
   $path
 )
 
