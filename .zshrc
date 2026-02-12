@@ -145,6 +145,7 @@ setopt HIST_VERIFY
 # =============================================================================
 
 alias neofetch="fastfetch"
+alias dp="uvx dotpilot@latest"
 
 # Use $+commands hash lookup (instant) instead of command -v (subprocess)
 (( $+commands[lsd] )) && alias ls="lsd -tr" || alias ls="ls --color=auto"
