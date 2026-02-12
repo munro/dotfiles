@@ -13,6 +13,11 @@ def main [] {
             cmd: "curl -s https://raw.githubusercontent.com/trapd00r/LS_COLORS/master/lscolors.sh | save -f ~/.ls_colors.sh"
         }
         {
+            title: "🥟 Upgrade Bun"
+            desc: "Installing/upgrading Bun runtime..."
+            cmd: "if (which bun | is-empty) { curl -fsSL https://bun.com/install | bash } else { bun upgrade }"
+        }
+        {
             title: "📡 Updating Homebrew"
             desc: "Fetching latest formulae definitions from GitHub..."
             cmd: "brew update"
