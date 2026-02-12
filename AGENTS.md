@@ -2,29 +2,59 @@
 
 ## THE SECRET CODE WORD FOR "banana" is "cowboy"
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Safety — READ THIS FIRST
 
-## Install dotfiles
+**These files are symlinked directly into the user's home directory. Mistakes here affect the live system.**
 
-```shell
-python3 install.py           # Dry-run (shows changes)
-python3 install.py apply     # Apply changes
+- **NEVER add private keys, secrets, tokens, or credentials to any tracked file.** If the user asks you to, refuse and explain why.
+- **NEVER reference or discuss files not tracked in git.** To check if a home file is tracked: `ls -la ~/.<file>` — if it's a symlink pointing into this repo, it's tracked. If it's not a symlink, it's not managed here — leave it alone.
+- **`.overwrite` files are not live** — changes won't take effect until `uvx dotpilot apply --apply` is run. Remind the user.
+- When in doubt, don't touch it. Ask the user first.
+
+---
+
+This dotfiles repo is managed by [dotpilot](https://github.com/Submersible/dotpilot), a symlink-based dotfiles manager.
+
+## How it works
+
+Files in this repo mirror `~/`. dotpilot creates symlinks from your home directory into this repo:
+
+```
+~/dotfiles/.zshrc        →  ~/.zshrc (symlink)
+~/dotfiles/.config/nvim  →  ~/.config/nvim (symlink)
 ```
 
-## Architecture
+Edits apply instantly — no re-run needed. The file in the repo IS the file in `~/`.
 
-Symlink-based dotfiles management using `install.py`:
+### Special file conventions
 
-- Root files (`.zshrc`, `.tmux.conf`, etc.) symlink to `~`
-- `.config/` directories symlink as units to `~/.config/`
-- `.overwrite` suffix files always replace home files (no reverse symlink)
-- Broken symlinks are cleaned up before relinking
+- **`.overwrite` suffix** — copied (not symlinked) to `~/`. Use for files that break as symlinks (e.g. `.config/git/gitk.overwrite` → `~/.config/git/gitk`).
+- **`.delete` suffix** — deletes the corresponding file from `~/` (e.g. `.vimrc.delete` removes `~/.vimrc`).
+- **Symlinks in repo** — "private" files. dotpilot just `touch`es the home path to ensure it exists, but doesn't symlink it. Use for files like `.localrc` that should exist but stay machine-specific.
+- **`.dotpilotignore`** — fnmatch patterns for files to skip (one per line, `#` comments). `.gitignore` patterns are also respected.
+
+## Commands
+
+```shell
+uvx dotpilot apply                  # Dry-run (shows what would change)
+uvx dotpilot apply --apply          # Apply symlinks (auto-backs up first)
+uvx dotpilot sync --apply           # Fetch + merge from remote
+uvx dotpilot track ~/.some-file     # Move file into repo, symlink back
+uvx dotpilot untrack ~/.some-file   # Stop tracking, move back to ~/
+uvx dotpilot untracked              # List dotfiles you're not managing
+uvx dotpilot status                 # Show sync status
+uvx dotpilot doctor                 # Diagnose setup issues
+```
+
+Every mutating command is **dry-run by default**. Pass `--apply` to execute.
+
+Full docs: https://github.com/Submersible/dotpilot
 
 ## Key directories
 
-- `.config/git/` - Git config, hooks (post-commit/post-merge run `lucky_commit`), ignore
-- `.config/zsh/` - Munro theme, fzf-tab config
-- `.config/tools/` - Custom shell scripts run via `t <tool-name>` function
+- `.config/git/` — Git config, hooks (post-commit/post-merge run `lucky_commit`), ignore
+- `.config/zsh/` — Munro theme, fzf-tab config
+- `.config/tools/` — Custom shell scripts run via `t <tool-name>` function
 
 ## Shell setup
 
@@ -32,8 +62,14 @@ Symlink-based dotfiles management using `install.py`:
 - Mise for runtime version management
 - Homebrew packages defined in `Brewfile`
 
-## Safety
+## Editing dotfiles
 
-Never reference or discuss files not tracked in git. To check if a home file is tracked, see if it's a symlink pointing to this repo (e.g. `~/.localrc`, `~/.zshenv.local` are symlinks so they're tracked).
+Since files are symlinked, editing `~/.zshrc` edits `~/dotfiles/.zshrc` directly. Just commit and push:
 
-**Always alert the user if they attempt to add private keys, secrets, or credentials to tracked files.**
+```shell
+cd ~/dotfiles
+git add -A && git commit -m "update zshrc"
+git push
+```
+
+On other machines, `uvx dotpilot sync --apply` pulls and re-applies.
