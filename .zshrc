@@ -150,6 +150,7 @@ alias neofetch="fastfetch"
 (( $+commands[lsd] )) && alias ls="lsd -tr" || alias ls="ls --color=auto"
 (( $+commands[rg] )) && alias rg="rg --max-columns=1000"
 (( $+commands[bat] )) && alias cat="bat" || { (( $+commands[batcat] )) && alias cat="batcat" }
+(( $+commands[gcat] )) || alias gcat="command cat"  # real cat (gcat exists on macOS via coreutils)
 (( $+commands[duf] )) && alias df="duf"
 (( $+commands[dust] )) && alias du="dust"
 (( $+commands[erd] )) && alias du-fast="erd -L 3 -l -H -I"
