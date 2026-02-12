@@ -178,6 +178,8 @@ alias gp='git push'
 alias gr='git reset'
 alias grs='git reset --soft'
 alias gs='git status'
+alias gc='git clone'
+alias gcf='git clone --single-branch --depth 1'
 
 # gitk alias - use real gitk if available, otherwise git k
 if (( $+commands[gitk] )); then
