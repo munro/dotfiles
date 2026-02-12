@@ -1,2 +1,3 @@
 [settings]
+paranoid = true
 experimental = true
