@@ -157,6 +157,20 @@ augroup END
 let g:github_user = 'munro'
 let g:github_token = $GITHUB_TOKEN
 
+" CoC requires a modern node runtime and Vim/Neovim support.
+function! s:NodeMajorVersion() abort
+  if !executable('node')
+    return 0
+  endif
+  let l:node_version = trim(system('node -v'))
+  if v:shell_error != 0
+    return 0
+  endif
+  return str2nr(matchstr(l:node_version, '\v\d+'))
+endfunction
+
+let g:coc_enabled = s:NodeMajorVersion() >= 16 && (has('nvim') || v:version >= 900)
+
 " =============================================================================
 " PLUGINS (vim-plug)
 " =============================================================================
@@ -179,7 +193,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'             " Git diff in gutter
 
 " LSP & Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if g:coc_enabled
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 
 " Syntax highlighting (for languages without LSP)
 Plug 'sheerun/vim-polyglot'
@@ -202,7 +218,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 " Auto-install coc extensions if coc.nvim is installed
-let g:coc_global_extensions = ['coc-pyright', '@yaegassy/coc-ruff', 'coc-json', 'coc-yaml']
+if g:coc_enabled
+  let g:coc_global_extensions = ['coc-pyright', '@yaegassy/coc-ruff', 'coc-json', 'coc-yaml']
+endif
 
 " =============================================================================
 " POST-PLUGIN CONFIG
@@ -213,15 +231,18 @@ colorscheme codedark " codedark xcode xcode-default ayu monokain
 " Color column styling (subtle dark)
 highlight! ColorColumn guibg=#111111 ctermbg=233
 
-" Inlay hints styling (darker gray, italic)
-highlight! CocInlayHint guifg=#555555 ctermfg=240 gui=italic cterm=italic
+if g:coc_enabled
+  " Inlay hints styling (darker gray, italic)
+  highlight! CocInlayHint guifg=#555555 ctermfg=240 gui=italic cterm=italic
+endif
 
 " -----------------------------------------------------------------------------
 " Minimap
 " -----------------------------------------------------------------------------
 let g:minimap_width = 10
-let g:minimap_auto_start = 1
-let g:minimap_git_colors = 1              " Show git diff colors
+let g:minimap_auto_start = 0
+" Git color integration can error on files outside a git repo.
+let g:minimap_git_colors = 0
 let g:minimap_highlight_search = 1        " Show search matches
 let g:minimap_highlight_range = 1         " Show visible range
 nnoremap <leader>m :MinimapToggle<CR>
@@ -244,67 +265,68 @@ nnoremap <leader>r :source $MYVIMRC<CR>:echo "Config reloaded!"<CR>
 " -----------------------------------------------------------------------------
 " coc.nvim configuration
 " -----------------------------------------------------------------------------
+if g:coc_enabled
+  " Use tab for trigger completion with characters ahead and navigate
+  inoremap <silent><expr> <TAB>
+        \ coc#pum#visible() ? coc#pum#next(1) :
+        \ CheckBackspace() ? "\<Tab>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Use tab for trigger completion with characters ahead and navigate
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+  " Make <CR> to accept selected completion item
+  inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Make <CR> to accept selected completion item
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
 
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+  " Use <c-space> to trigger completion
+  inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <c-space> to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
+  " GoTo code navigation
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
 
-" GoTo code navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+  " Use K to show documentation in preview window
+  nnoremap <silent> K :call ShowDocumentation()<CR>
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call ShowDocumentation()<CR>
+  function! ShowDocumentation()
+    if CocAction('hasProvider', 'hover')
+      call CocActionAsync('doHover')
+    else
+      call feedkeys('K', 'in')
+    endif
+  endfunction
 
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
+  " Highlight the symbol and its references when holding the cursor
+  autocmd CursorHold * silent! call CocActionAsync('highlight')
 
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent! call CocActionAsync('highlight')
+  " Symbol renaming
+  nmap <leader>rn <Plug>(coc-rename)
 
-" Symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
+  " Format selected code
+  xmap <leader>f  <Plug>(coc-format-selected)
+  nmap <leader>f  <Plug>(coc-format)
 
-" Format selected code
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format)
+  " Organize imports
+  nmap <leader>i  :CocCommand ruff.executeOrganizeImports<CR>
 
-" Organize imports
-nmap <leader>i  :CocCommand ruff.executeOrganizeImports<CR>
+  " Auto organize imports and format on save for Python
+  autocmd BufWritePre *.py silent! call CocAction('runCommand', 'ruff.executeOrganizeImports')
+  autocmd BufWritePre *.py silent! call CocAction('runCommand', 'ruff.executeFormat')
 
-" Auto organize imports and format on save for Python
-autocmd BufWritePre *.py silent! call CocAction('runCommand', 'ruff.executeOrganizeImports')
-autocmd BufWritePre *.py silent! call CocAction('runCommand', 'ruff.executeFormat')
+  " Apply code action to the selected region
+  xmap <leader>a  <Plug>(coc-codeaction-selected)
+  nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Apply code action to the selected region
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  " Navigate diagnostics
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+endif
 
 " =============================================================================
 " LOCAL OVERRIDES
