@@ -7,7 +7,7 @@ git_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
 }
 
 msg="wip"
-[[ $# -gt 0 ]] && msg="wip $*"
+[[ $# -gt 0 ]] && msg="$*"
 
 cd "$git_root"
 git add .
