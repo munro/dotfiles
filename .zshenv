@@ -72,7 +72,7 @@ path+=(
 )
 
 # Remove non-existent PATH entries
-path=( ${^path}(N) )
+# path=( ${^path}(N) )
 
 # =============================================================================
 # LOCAL SETTINGS

@@ -1,5 +1,7 @@
 #!/usr/bin/env nu
 # brew autoremove -v && brew cleanup -s --prune=all -v
+# TODO curl -fsSL https://claude.ai/install.sh | bash
+
 
 def main [] {
     cd ~
