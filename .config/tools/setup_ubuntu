@@ -8,6 +8,7 @@ apt_packages=(
   build-essential    # gcc/g++/make toolchain
   cmake              # cross-platform build system
   pkg-config         # compile/link flags discovery
+  libssl-dev         # OpenSSL headers for Rust crates (openssl-sys)
 
   # Base essentials
   ca-certificates    # TLS root certs
@@ -53,12 +54,28 @@ apt_packages=(
 sudo apt update
 sudo apt install "${apt_packages[@]}"
 
+# ── Node.js LTS (required by coc.nvim) ───────────────────────────────
+echo "Installing Node.js 20 LTS..."
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
 # ── Vim AppImage (latest vim, required for coc.nvim) ─────────────────
 echo "Installing latest Vim AppImage..."
-curl -sL "$(curl -s https://api.github.com/repos/vim/vim-appimage/releases/latest \
-  | jq -r '.assets[] | select(.name | test("^Vim-.*x86_64\\.AppImage$")) | .browser_download_url')" \
-  -o /usr/local/bin/vim
-chmod +x /usr/local/bin/vim
+vim_appimage_url="$(
+  curl -fsSL https://api.github.com/repos/vim/vim-appimage/releases/latest \
+    | jq -r '.assets[] | select(.name | test("^Vim-.*x86_64\\.AppImage$")) | .browser_download_url' \
+    | head -n 1
+)"
+
+if [[ -z "${vim_appimage_url}" || "${vim_appimage_url}" == "null" ]]; then
+  echo "ERROR: Could not find latest Vim x86_64 AppImage download URL."
+  exit 1
+fi
+
+tmp_vim_appimage="$(mktemp)"
+curl -fL "${vim_appimage_url}" -o "${tmp_vim_appimage}"
+sudo install -m 0755 "${tmp_vim_appimage}" /usr/local/bin/vim
+rm -f "${tmp_vim_appimage}"
 
 # ── Rust toolchain ─────────────────────────────────────────────────
 if ! command -v rustup &>/dev/null; then
