@@ -4,9 +4,9 @@ set -euo pipefail
 echo "Cleaning .pyc files and __pycache__ directories..."
 
 # Delete all .pyc files (excluding .venv)
-fd --no-ignore --exclude '.venv' --type f '\.pyc$' --exec rm -v {}
+fd --no-ignore --exclude '.venv' --type f '\.pyc$' -x rm -v {}
 
 # Delete all __pycache__ directories (excluding .venv)
-fd --no-ignore --exclude '.venv' --type d '^__pycache__$' --exec rm -rv {}
+fd --no-ignore --exclude '.venv' --type d '^__pycache__$' -x rm -rv {}
 
 echo "Done!"

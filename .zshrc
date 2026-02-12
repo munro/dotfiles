@@ -6,8 +6,11 @@ typeset -U fpath  # auto-dedupe
 
 fpath=(
   $HOME/.bun
+  $HOME/.local/share/zsh/site-functions
   $HOME/.local/share/zsh/completions
   /opt/homebrew/share/zsh/site-functions
+  # ubuntu
+  /snap/task/current/completion/zsh
   $fpath
 )
 
@@ -165,13 +168,13 @@ export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
 
 alias -- -='cd -'
 alias g='git'
+alias gd='git diff HEAD'
 alias gf='git fetch'
 alias gl='git log'
 alias gp='git push'
 alias gr='git reset'
 alias grs='git reset --soft'
 alias gs='git status'
-alias gc='git add "$(git rev-parse --show-toplevel)" && git commit -m wip'
 
 # gitk alias - use real gitk if available, otherwise git k
 if (( $+commands[gitk] )); then
@@ -189,6 +192,7 @@ export GREP_COLOR='1;32'
 export GREP_COLORS="mt=$GREP_COLOR"
 alias grep="grep --color=auto"
 export AWS_DEFAULT_OUTPUT="table"
+export AWS_PAGER=""  # disable pager, print directly to console
 
 # Pager configuration
 export PAGER=less
@@ -459,7 +463,7 @@ zstyle ':completion:*' squeeze-slashes true  # Treat // as / in path completion
 
 # Completion matching - tried in order:
 # 1. Case-insensitive prefix (abc → Abc)
-# 2. + partial at delimiters (f-b → foo-bar)
+# 2. + partial at delimiters (f-b → foo-bar)  
 # 3. + substring anywhere (wor → troveo_workers)
 zstyle ':completion:*' matcher-list \
   'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
@@ -488,10 +492,10 @@ fi
 
 autoload -Uz compinit
 # Use cached .zcompdump if less than 24 hours old, otherwise rebuild
-if [[ -n ~/.zcompdump(#qN.mh-24) ]]; then
-  compinit -C
+if [[ -n $HOME/.cache/zsh/zcompdump(#qN.mh-24) ]]; then
+  compinit -C -d "$HOME/.cache/zsh/zcompdump"
 else
-  compinit
+  compinit -d "$HOME/.cache/zsh/zcompdump"
 fi
 
 # =============================================================================
@@ -536,9 +540,13 @@ compdef _t_completion t
 
 function rr() {
   # Clear completion cache
-  rm -rf ~/.zcompdump*
-  rm -rf ~/.cache/zcompcache
   rm -rf ~/.cache/zsh
+  # Old locations for completion cache
+  rm -rf ~/.zcompdump*
+  rm -rf ~/.zcompcache*
+  rm -rf ~/.cache/zcompdump*
+  rm -rf ~/.cache/zcompcache*
+
 
   # Exec fresh login shell (cleanest reload - replaces current process)
   exec zsh -l

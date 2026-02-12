@@ -19,6 +19,7 @@ export GIT_COMMITTER_EMAIL="500774+munro@users.noreply.github.com"
 # -----------------------------------------------------------------------------
 
 export EDITOR="vim"  # in zshenv so GUI apps and scripts know preferred editor
+export VIMINIT='source ~/.config/vim/vimrc'
 export PYTHONPYCACHEPREFIX="$HOME/.cache/pycache"
 export UV_COMPILE_BYTECODE=1
 export OVERCOMMIT_DISABLE=1
@@ -42,7 +43,7 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 typeset -U path  # auto-dedupe
 
 path=(
-  # mise shims
+  # Mise shims (fallback for non-interactive shells like Cursor)
   "$HOME/.local/share/mise/shims"
   # User tools
   "$HOME/.config/tools.local"
@@ -86,10 +87,4 @@ fi
 
 export MISE_SHELL=zsh
 eval "$(mise activate zsh)"
-#if [[ -f "$HOME/.cache/zsh/mise-activate.zsh" && -n "$HOME/.cache/zsh/mise-activate.zsh"(#qN.mh-24) ]]; then
-#  source "$HOME/.cache/zsh/mise-activate.zsh"
-#else
-#  mkdir -p "$HOME/.cache/zsh"
-#  mise activate zsh > "$HOME/.cache/zsh/mise-activate.zsh"
-#  source "$HOME/.cache/zsh/mise-activate.zsh"
-#fi
+eval "$(mise hook-env -s zsh 2>/dev/null)" || true  # run hook immediately for non-interactive shells

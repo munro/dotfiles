@@ -2,6 +2,12 @@
 " CORE SETTINGS
 " =============================================================================
 
+" XDG-style config directory
+set runtimepath^=~/.config/vim
+set runtimepath+=~/.config/vim/after
+let &packpath = &runtimepath
+let $MYVIMRC = expand('~/.config/vim/vimrc')
+
 " -----------------------------------------------------------------------------
 " General
 " -----------------------------------------------------------------------------

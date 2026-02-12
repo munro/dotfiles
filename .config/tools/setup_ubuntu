@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# TODO zsh-autosuggestions
-# TODO zsh-syntax-highlighting
-# TODO code-minimap
-
 apt_packages=(
   # Build tooling
   autoconf           # autoconf macros
@@ -27,12 +23,13 @@ apt_packages=(
 
   # Shell workflow
   zsh                # shell
+  zsh-autosuggestions      # fish-like suggestions
+  zsh-syntax-highlighting  # command highlighting
   tmux               # terminal multiplexer
   fzf                # fuzzy finder
 
   # Modern CLI replacements / utilities
   bat                # cat replacement (binary may be batcat)
-  fd-find            # fd replacement (binary is fdfind)
   ripgrep            # fast grep
   duf                # disk usage (df replacement)
   htop               # process viewer
@@ -49,9 +46,6 @@ apt_packages=(
   mosh               # better ssh sessions
   netcat-openbsd     # nc
   nmap               # network scanner
-
-  # Task runner
-  task               # go-task binary (command: task)
 
   # Database (local tooling)
   sqlite3            # sqlite CLI
@@ -85,8 +79,12 @@ cargo_packages=(
   # Shell essentials (install first — used immediately)
   lsd                # ls replacement with icons/colors
 
+  # Vim
+  code-minimap       # minimap.vim backend (binary: code-minimap)
+
   # Modern CLI replacements / utilities
   du-dust            # du replacement (binary: dust)
+  fd-find            # fd replacement (binary: fd)
   git-delta          # pager/diff for git (binary: delta)
   difftastic         # structural/syntax-aware diff (binary: difft)
   sd                 # sed replacement
@@ -107,3 +105,12 @@ for entry in "${cargo_packages[@]}"; do
   sudo env CARGO_HOME="$HOME/.cargo" RUSTUP_HOME="$HOME/.rustup" \
     "$HOME/.cargo/bin/cargo" install $pkg $extra --root /usr/local || true
 done
+
+# ── go-task ────────────────────────────────────────────────────────
+if ! command -v task &>/dev/null; then
+  echo "Installing go-task..."
+  sudo sh -c 'curl -1sLf https://dl.cloudsmith.io/public/task/task/setup.deb.sh | bash'
+  sudo apt install task
+else
+  echo "go-task already installed"
+fi
