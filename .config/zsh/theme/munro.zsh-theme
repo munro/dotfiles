@@ -42,24 +42,11 @@ function git_prompt_info() {
     echo "${PS1_COLOR}${ref}${dirty}%f"
 }
 
-# Dotfiles sync status (reads ~/.local/state/dotfiles-sync written by update.sh)
+# Dotfiles sync status (reads dotpilot sync-status-error file)
 function dotfiles_sync_status() {
-    local status_file="$HOME/.local/state/dotfiles-sync"
+    local status_file="$HOME/.local/state/dotpilot/sync-status-error"
     [[ -f "$status_file" ]] || return
-
-    local sync_status=""
-    while IFS='=' read -r key val; do
-        [[ "$key" == "STATUS" ]] && sync_status="$val"
-    done < "$status_file"
-
-    case "$sync_status" in
-        ok|"") ;;
-        dirty)        echo "%B%F{red}[DOTFILES DIRTY] %f%b" ;;
-        unpushed)     echo "%B%F{yellow}[DOTFILES UNPUSHED] %f%b" ;;
-        merge_failed) echo "%B%F{red}[DOTFILES SYNC FAILED] %f%b" ;;
-        fetch_failed) echo "%B%F{red}[DOTFILES FETCH FAILED] %f%b" ;;
-        *)            echo "%B%F{red}[DOTFILES: ${sync_status}] %f%b" ;;
-    esac
+    echo "%B%F{red}[DOTFILES: $(<$status_file)] %f%b"
 }
 
 # Set the prompts
