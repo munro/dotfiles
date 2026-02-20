@@ -3,19 +3,22 @@
 # Colors - using zsh's built-in color support
 autoload -U colors && colors
 
-# Set prompt color based on SSH connection
-if [[ -v SSH_CONNECTION ]]; then
+# Set prompt color based on remote connection
+if [[ "$(who am i)" == *\(*\)* ]]; then
     PS1_COLOR="%F{green}"
-    PS1_PREFIX="$(hostname) "
+    PS1_PREFIX="%B$USER@$(hostname)%b "
 else
     PS1_COLOR="%F{magenta}"
     PS1_PREFIX=""
 fi
 
+# Override color to red for root
+[[ $EUID -eq 0 ]] && PS1_COLOR="%F{red}"
+
 # Virtual environment indicator
 function ps1_virtual_env() {
     if [[ -n ${VIRTUAL_ENV} ]]; then
-        echo -n " ${PS1_COLOR}($(basename ${VIRTUAL_ENV}))%f"
+        echo -n " ${PS1_COLOR}($(basename ${VIRTUAL_ENV}))%f%b"
     fi
 }
 
