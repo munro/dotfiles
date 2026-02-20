@@ -169,6 +169,7 @@ export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
 # ALIASES - GIT & DOTFILES
 # =============================================================================
 
+[[ $EUID -ne 0 ]] && alias su='sudo su'
 alias -- -='cd -'
 alias g='git'
 alias gd='git diff HEAD'
