@@ -50,7 +50,8 @@ brew "pkg-config"
 # PROGRAMMING LANGUAGES & RUNTIMES
 # =============================================================================
 
-brew "coq"
+brew "go"
+brew "rocq"
 brew "deno"
 brew "fnm"
 brew "golang"
@@ -198,6 +199,7 @@ brew "geckodriver"
 brew "gnupg"
 brew "go-task"
 brew "mkcert"
+brew "pnpm"
 brew "p7zip"
 brew "pv"
 brew "pwgen"
@@ -248,6 +250,7 @@ cask "google-chrome"
 # =============================================================================
 
 
+cask "musescore"
 cask "obs"
 cask "qbittorrent"
 cask "streamlabs"
