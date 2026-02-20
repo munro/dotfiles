@@ -30,7 +30,6 @@ apt_packages=(
   fzf                # fuzzy finder
 
   # Modern CLI replacements / utilities
-  bat                # cat replacement (binary may be batcat)
   ripgrep            # fast grep
   duf                # disk usage (df replacement)
   htop               # process viewer
@@ -119,6 +118,7 @@ cargo_packages=(
   code-minimap       # minimap.vim backend (binary: code-minimap)
 
   # Modern CLI replacements / utilities
+  bat                # cat replacement
   du-dust            # du replacement (binary: dust)
   fd-find            # fd replacement (binary: fd)
   git-delta          # pager/diff for git (binary: delta)
