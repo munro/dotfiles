@@ -157,10 +157,9 @@ alias vi="vim"
 (( $+commands[dust] )) && alias du="dust"
 (( $+commands[erd] )) && alias du-fast="erd -L 3 -l -H -I"
 
-# GNU coreutils/findutils (aliased to avoid breaking builds)
-for cmd in awk base32 base64 b2sum chgrp chmod chown cp cut date find head ln \
-           mkdir mv nproc od rm rmdir sed sha1sum sha224sum sha256sum sha384sum \
-           sha512sum sort tail tar tee uniq wc xargs; do
+# GNU coreutils/findutils (read-only tools only — no FS-mutating commands to avoid iCloud sync issues)
+for cmd in awk base32 base64 b2sum cut date find head nproc od sed sha1sum \
+           sha224sum sha256sum sha384sum sha512sum sort tail tar tee uniq wc xargs; do
   (( $+commands[g$cmd] )) && alias $cmd="g$cmd"
 done
 export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:${MANPATH:-}"
