@@ -228,6 +228,7 @@ cask "clocker"
 cask "libreoffice"
 cask "obsidian"
 cask "raycast"
+cask "wispr-flow"
 
 # =============================================================================
 # CASKS - DEVELOPMENT
