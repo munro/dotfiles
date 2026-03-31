@@ -82,6 +82,7 @@ brew "zsh-syntax-highlighting"
 # GIT & VERSION CONTROL
 # =============================================================================
 
+brew "gh"
 brew "git"
 brew "git-delta"
 brew "git-gui"
