@@ -82,6 +82,7 @@ brew "zsh-syntax-highlighting"
 # GIT & VERSION CONTROL
 # =============================================================================
 
+brew "gh"
 brew "git"
 brew "git-delta"
 brew "git-gui"
@@ -228,6 +229,7 @@ cask "clocker"
 cask "libreoffice"
 cask "obsidian"
 cask "raycast"
+cask "wispr-flow"
 
 # =============================================================================
 # CASKS - DEVELOPMENT
