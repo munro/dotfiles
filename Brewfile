@@ -235,6 +235,7 @@ cask "raycast"
 
 cask "base"
 cask "ghostty"
+cask "kicad"
 cask "orbstack"
 cask "postico"
 cask "rstudio"
@@ -244,12 +245,14 @@ cask "rstudio"
 # =============================================================================
 
 cask "google-chrome"
+cask "ungoogled-chromium"
 
 # =============================================================================
 # CASKS - MEDIA
 # =============================================================================
 
 
+cask "blackhole-2ch"
 cask "musescore"
 cask "obs"
 cask "qbittorrent"
